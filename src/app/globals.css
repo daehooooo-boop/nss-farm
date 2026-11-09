@@ -1,26 +1,110 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/*
+ * NAME SYNERGY design tokens — docs/DESIGN_GUIDE.md
+ * Components must use these token names, never raw hex values.
+ */
+@theme {
+  --color-paper: #f7f4ef;
+  --color-surface: #ffffff;
+  --color-ink: #17161c;
+  --color-ink-soft: #55525c;
+  --color-ink-faint: #6e6a75;
+  --color-line: #e4dfd7;
+  --color-line-strong: #cfc8bd;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --color-person-a: #3d47b8;
+  --color-person-a-tint: #ecedfa;
+  --color-person-a-night: #a9a4ff;
+  --color-person-b: #a44f24;
+  --color-person-b-bright: #d9773f;
+  --color-person-b-tint: #fbeee6;
+  --color-person-b-night: #f2a878;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  --color-night: #17161c;
+  --color-night-soft: #2a2830;
+  --color-success: #2f7a57;
+  --color-danger: #b3261e;
+
+  --radius-card: 20px;
+  --radius-field: 14px;
+  --radius-tag: 8px;
+
+  --ease-out-soft: cubic-bezier(0.2, 0.7, 0.2, 1);
+
+  --animate-rise: rise 520ms var(--ease-out-soft) both;
+
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@theme inline {
+  --font-display: var(--font-instrument), "Times New Roman", serif;
+  --font-serif-kr: var(--font-noto-serif-kr), "Apple SD Gothic Neo", serif;
+  --font-sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
+    system-ui, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    word-break: keep-all;
+    overflow-wrap: break-word;
+  }
+
+  ::selection {
+    background: var(--color-person-a-tint);
+    color: var(--color-ink);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-ink);
+    outline-offset: 2px;
+  }
+}
+
+@utility synergy-gradient {
+  background-image: linear-gradient(
+    120deg,
+    var(--color-person-a) 0%,
+    var(--color-person-b-bright) 100%
+  );
+}
+
+@utility eyebrow {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  line-height: 1.4;
+  text-transform: uppercase;
+  @media (width >= 48rem) {
+    font-size: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

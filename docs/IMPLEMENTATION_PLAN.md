@@ -9,8 +9,8 @@
 | --- | --- | --- |
 | 1 | 프로젝트 구조·개발 환경 확인 | ✅ 완료 |
 | 2 | PRD · 디자인 가이드 · 분석 규칙 문서 | ✅ 완료 |
-| 3 | 디자인 시스템 기초 + 메인 페이지 | ⏳ 다음 |
-| 4 | 이름 입력 페이지 | ○ |
+| 3 | 디자인 시스템 기초 + 메인 페이지 | ✅ 완료 |
+| 4 | 이름 입력 페이지 | ⏳ 다음 |
 | 5 | 이름 분석 엔진 + 단위 테스트 | ○ |
 | 6 | 분석 진행 화면 + 결과 페이지 | ○ |
 | 7 | 공유 기능 (이미지 저장, 텍스트 복사, Web Share) | ○ |
@@ -32,7 +32,7 @@
 
 ## STEP 3 — 디자인 시스템 기초 + 메인 페이지 `/`
 
-1. 폰트: Instrument Serif · Noto Serif KR(`next/font/google`), Pretendard(`pretendard` 패키지 + `next/font/local`)
+1. 폰트: Instrument Serif · Noto Serif KR(`next/font/google`), Pretendard(`pretendard` 패키지의 dynamic-subset CSS를 layout에서 import)
 2. `globals.css` `@theme` 토큰: 색상, 폰트, 반경, 이징 (DESIGN_GUIDE 3·4·6·7장)
 3. `layout.tsx`: `lang="ko"`, 기본 metadata(title 템플릿, description, OG), 폰트 변수
 4. 공통 컴포넌트: `ui/Button`, `ui/Container`, `ui/Eyebrow`, `ui/SynergyMark`(두 원 교차 심볼), `layout/Header`, `layout/Footer`
