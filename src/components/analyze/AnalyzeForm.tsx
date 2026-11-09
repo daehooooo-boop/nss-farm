@@ -4,12 +4,13 @@ import { useCallback, useMemo, useRef, useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowRight, Lock } from "lucide-react";
 import { Button } from "@/components/ui/Button";
-import { PersonCard } from "@/components/analyze/PersonCard";
+import { NameField } from "@/components/analyze/NameField";
+import { DetailsPanel } from "@/components/analyze/DetailsPanel";
 import { RelationPicker } from "@/components/analyze/RelationPicker";
 import { AnalyzingScreen } from "@/components/analyze/AnalyzingScreen";
 import { analyzeNames } from "@/lib/analysis";
 import { personLabels } from "@/data/relations";
-import { nameMinLength, validateInput } from "@/lib/analysis/validate";
+import { validateInput } from "@/lib/analysis/validate";
 import { saveInput } from "@/lib/storage/session";
 import type { DraftInput, PersonFieldErrors, PersonInput, PersonKey, Relation } from "@/lib/analysis/types";
 
@@ -84,46 +85,61 @@ export function AnalyzeForm() {
   }
 
   const relationError = submitted && !result.ok ? result.errors.relation : undefined;
+  const errors = { a: visibleErrors("a"), b: visibleErrors("b") };
 
   return (
-    <form ref={formRef} noValidate onSubmit={handleSubmit} className="space-y-8">
-      <div className="relative grid gap-4 lg:grid-cols-2 lg:items-start lg:gap-6">
-        {(["a", "b"] as const).map((key) => (
-          <PersonCard
-            key={key}
-            personKey={key}
-            label={labels[key]}
-            value={draft[key]}
-            minLength={nameMinLength(key, draft.relation)}
-            errors={visibleErrors(key)}
-            warnings={result.warnings[key]}
-            onChange={(field, value) => update(key, field, value)}
-            onBlur={(field) => blur(key, field)}
-          />
-        ))}
+    <form ref={formRef} noValidate onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
+      <div className="grid gap-3 md:grid-cols-[1fr_auto_1fr] md:items-start md:gap-4">
+        <NameField
+          personKey="a"
+          label={labels.a}
+          value={draft.a.name}
+          placeholder="예: 김하윤"
+          error={errors.a.name}
+          onChange={(v) => update("a", "name", v)}
+          onBlur={() => blur("a", "name")}
+        />
         <span
           aria-hidden="true"
-          className="pointer-events-none absolute top-1/2 left-1/2 hidden size-12 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border border-line bg-paper font-display text-2xl italic text-ink-soft lg:grid"
+          className="hidden size-10 place-items-center self-end rounded-full font-display text-2xl text-ink-faint italic md:mb-2 md:grid"
         >
           ×
         </span>
+        <NameField
+          personKey="b"
+          label={labels.b}
+          value={draft.b.name}
+          placeholder={draft.relation === "pet" ? "예: 콩" : "예: 이도현"}
+          error={errors.b.name}
+          onChange={(v) => update("b", "name", v)}
+          onBlur={() => blur("b", "name")}
+        />
       </div>
+
+      <DetailsPanel
+        draft={draft}
+        labels={labels}
+        errors={errors}
+        warnings={result.warnings}
+        onChange={update}
+        onBlur={blur}
+      />
 
       <RelationPicker value={draft.relation} error={relationError} onChange={selectRelation} />
 
-      <div className="flex flex-col items-stretch gap-4 border-t border-line pt-8 sm:flex-row sm:items-center sm:justify-between">
-        <p className="inline-flex items-center gap-1.5 text-[13px] text-ink-faint">
-          <Lock size={14} strokeWidth={1.75} aria-hidden />
-          입력한 이름은 저장되지 않고 이 브라우저 안에서만 분석돼요.
-        </p>
+      <div className="pt-1 md:flex md:items-center md:justify-between md:gap-6 md:pt-2">
         <Button
           type="submit"
           aria-disabled={!result.ok}
-          className={result.ok ? "" : "opacity-40"}
+          className={`w-full md:order-2 md:w-auto md:min-w-[220px] ${result.ok ? "" : "opacity-40"}`}
           icon={<ArrowRight size={20} strokeWidth={1.75} aria-hidden />}
         >
-          분석 시작하기
+          분석하기
         </Button>
+        <p className="mt-2.5 flex items-center justify-center gap-1.5 text-[12px] text-ink-faint md:order-1 md:mt-0 md:text-[13px]">
+          <Lock size={13} strokeWidth={1.75} aria-hidden />
+          이름은 저장되지 않고 이 브라우저 안에서만 분석돼요
+        </p>
       </div>
       {storageError ? (
         <p role="alert" className="text-[13px] text-danger">

@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   },
   description: SITE.description,
   applicationName: SITE.name,
-  keywords: ["이름 궁합", "이름 조화", "커플 이름", "이름 분석", "NAME SYNERGY"],
+  keywords: ["이름 궁합", "이름 조화", "커플 이름", "이름 분석", "이름 궁합 테스트", "NAME SYNERGY"],
   openGraph: {
     type: "website",
     locale: "ko_KR",

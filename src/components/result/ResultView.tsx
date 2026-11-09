@@ -46,7 +46,7 @@ export function ResultView() {
       <header className="bg-night text-paper">
         <Container className="pt-10 pb-16 md:pt-16 md:pb-24">
           <div className="flex items-center justify-between">
-            <p className="eyebrow text-paper/60">Name Synergy Report</p>
+            <p className="eyebrow text-paper/60">이름 궁합 리포트</p>
             <p className="rounded-full border border-paper/25 px-3 py-1 text-[12px] text-paper/80">{relation.label}</p>
           </div>
           <h1 className="mt-10 font-serif-kr text-[36px] leading-[1.2] font-bold md:text-[64px]">

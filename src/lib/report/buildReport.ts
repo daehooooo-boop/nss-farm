@@ -95,7 +95,7 @@ export function buildReport(result: AnalysisResult): Report {
     `${type.label} — ${type.title}`,
     `“${headline}”`,
     "",
-    "두 이름이 만드는 이야기, NAME SYNERGY에서 확인해 보세요.",
+    "두 이름이 만드는 이야기, 이름 궁합에서 확인해 보세요.",
     "※ 재미로 보는 엔터테인먼트 콘텐츠예요.",
   ].join("\n");
 

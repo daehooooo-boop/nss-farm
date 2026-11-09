@@ -29,7 +29,7 @@ export function ScoreRing({ score, size = 240 }: { score: number; size?: number 
       </svg>
       <div className="absolute inset-0 flex flex-col items-center justify-center">
         <span className="font-display text-[88px] leading-[0.9] tabular-nums md:text-[104px]">{score}</span>
-        <span className="mt-1 text-[12px] tracking-[0.16em] text-paper/60 uppercase">Synergy Index</span>
+        <span className="mt-1 text-[12px] tracking-[0.08em] text-paper/60">/ 100</span>
       </div>
     </div>
   );

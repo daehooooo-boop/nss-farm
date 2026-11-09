@@ -30,7 +30,7 @@ export function ResultPreview({ data }: { data: ResultPreviewData }) {
         <figure className="lg:col-span-6 lg:col-start-7">
           <div className="overflow-hidden rounded-[28px] bg-night p-7 text-paper md:p-10">
             <div className="flex items-center justify-between">
-              <p className="eyebrow text-paper/60">Name Synergy Report</p>
+              <p className="eyebrow text-paper/60">이름 궁합 리포트</p>
               <p className="rounded-full border border-paper/25 px-3 py-1 text-[12px] text-paper/80">
                 {data.relationLabel}
               </p>

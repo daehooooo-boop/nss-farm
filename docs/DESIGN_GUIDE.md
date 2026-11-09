@@ -83,8 +83,8 @@ PHASE 1은 라이트 테마 단일. 결과 커버와 공유 카드만 `night` �
 
 | 역할 | 서체 | 로드 방식 | 비고 |
 | --- | --- | --- | --- |
-| 워드마크·영문 디스플레이·큰 숫자 | **Instrument Serif** | `next/font/google` | 매거진 마스트헤드 느낌, 이탤릭 허용 |
-| 한글 헤드라인 | **Noto Serif KR** (500, 700) | `next/font/google` | 에디토리얼 톤의 한글 제목 |
+| 영문 디스플레이·큰 숫자 | **Instrument Serif** | `next/font/google` | 매거진 마스트헤드 느낌, 이탤릭 허용 |
+| 워드마크 `이름 궁합`·한글 헤드라인 | **Noto Serif KR** (500, 700) | `next/font/google` | 에디토리얼 톤의 한글 제목 |
 | 본문·UI | **Pretendard Variable** | `pretendard` npm 패키지의 dynamic-subset CSS (한글을 unicode-range 조각으로 필요한 만큼만 로드) | 가독성, 숫자는 `tabular-nums` |
 
 CSS 변수: `--font-display`, `--font-serif-kr`, `--font-sans`.
@@ -151,7 +151,7 @@ CSS 변수: `--font-display`, `--font-serif-kr`, `--font-sans`.
 
 ```
 ┌──────────────────────────┐
-│ NAME SYNERGY        (상단)│  Instrument Serif, paper
+│ 이름 궁합            (상단)│  Noto Serif KR 700, paper
 │                          │
 │   김민준                  │  Noto Serif KR, #A9A4FF
 │      ×                   │

@@ -16,7 +16,7 @@ export function HowItWorks() {
               <br className="md:hidden" /> 가장 많이 듣는 소리입니다.
             </>
           }
-          description="NAME SYNERGY는 두 사람의 이름을 나란히 놓고, 그 소리와 짜임새와 뜻이 어떻게 어울리는지 읽어 드리는 이름 리포트예요. 근거 없는 점수 대신, 왜 그런 결과가 나왔는지를 함께 보여드려요."
+          description="이름 궁합은 두 사람의 이름을 나란히 놓고, 그 소리와 짜임새와 뜻이 어떻게 어울리는지 읽어 드리는 이름 리포트예요. 근거 없는 점수 대신, 왜 그런 결과가 나왔는지를 함께 보여드려요."
         />
         <ol className="mt-14 grid gap-10 md:grid-cols-3 md:gap-8">
           {HOW_IT_WORKS.map((item) => (

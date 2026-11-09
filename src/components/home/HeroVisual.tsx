@@ -5,7 +5,7 @@ export function HeroVisual({ className = "" }: { className?: string }) {
       viewBox="0 0 400 260"
       className={className}
       role="img"
-      aria-label="두 개의 원이 겹쳐 하나의 교차 영역을 만드는 NAME SYNERGY 심볼"
+      aria-label="두 개의 원이 겹쳐 하나의 교차 영역을 만드는 이름 궁합 심볼"
     >
       <defs>
         <linearGradient id="hero-synergy" x1="0" y1="0" x2="1" y2="1">

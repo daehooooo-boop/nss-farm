@@ -1,6 +1,6 @@
 @AGENTS.md
 
-# NAME SYNERGY — 개발 규칙
+# 이름 궁합 (NAME SYNERGY) — 개발 규칙
 
 > Two Names, One Connection.
 > 두 사람의 이름을 규칙 기반으로 비교해 이름 조화 지수와 관계 리포트를 보여주는 웹 서비스.

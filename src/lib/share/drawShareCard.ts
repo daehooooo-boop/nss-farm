@@ -73,9 +73,9 @@ export async function drawShareCard(data: ShareCardData): Promise<HTMLCanvasElem
   const sans = '"Pretendard Variable", Pretendard, system-ui, sans-serif';
 
   // 카드에 쓰는 글자가 폰트 조각에 포함되도록 미리 불러온다
-  const allText = `${data.nameA}${data.nameB}${data.grade}${data.message}${data.typeTitle}${data.relationLabel}`;
+  const allText = `이름 궁합${data.nameA}${data.nameB}${data.grade}${data.message}${data.typeTitle}${data.relationLabel}`;
   await Promise.allSettled([
-    document.fonts.load(`400 64px ${display}`, `NAME SYNERGY 0123456789 ${data.typeCode} TYPE ×`),
+    document.fonts.load(`400 64px ${display}`, `0123456789 ${data.typeCode} TYPE ×`),
     document.fonts.load(`italic 400 32px ${display}`, "Two Names, One Connection. ×"),
     document.fonts.load(`700 64px ${serifKr}`, allText),
     document.fonts.load(`500 40px ${serifKr}`, allText),
@@ -106,9 +106,9 @@ export async function drawShareCard(data: ShareCardData): Promise<HTMLCanvasElem
   ctx.arc(left + 60, 150, 24, 0, Math.PI * 2);
   ctx.stroke();
   ctx.fillStyle = COLOR.paper;
-  ctx.font = `400 48px ${display}`;
+  ctx.font = `700 46px ${serifKr}`;
   ctx.textAlign = "left";
-  ctx.fillText("NAME SYNERGY", left + 110, 166);
+  ctx.fillText("이름 궁합", left + 110, 166);
 
   ctx.font = `600 30px ${sans}`;
   ctx.textAlign = "right";

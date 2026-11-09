@@ -1,5 +1,5 @@
 /**
- * NAME SYNERGY 분석 엔진 진입점 — ANALYSIS_RULES 6, 7장.
+ * 이름 궁합 분석 엔진 진입점 — ANALYSIS_RULES 6, 7장.
  * 결정적 순수 함수: 같은 입력이면 항상 같은 결과를 돌려준다.
  */
 import { GRADES, RULES_VERSION, SECTION_WEIGHTS, TYPE_RULES } from "@/lib/analysis/constants";

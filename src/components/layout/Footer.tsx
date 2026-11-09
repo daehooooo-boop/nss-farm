@@ -16,7 +16,7 @@ export function Footer() {
           </ul>
         </div>
         <p className="mt-12 border-t border-paper/15 pt-6 text-[13px] text-paper/50">
-          © NAME SYNERGY
+          © 이름 궁합
         </p>
       </div>
     </footer>
