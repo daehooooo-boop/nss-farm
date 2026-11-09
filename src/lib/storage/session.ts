@@ -29,14 +29,7 @@ export function saveInput(input: AnalysisInput): boolean {
 }
 
 export function loadInput(): AnalysisInput | null {
-  try {
-    const raw = window.sessionStorage.getItem(INPUT_KEY);
-    if (!raw) return null;
-    const parsed: unknown = JSON.parse(raw);
-    return isAnalysisInput(parsed) ? parsed : null;
-  } catch {
-    return null;
-  }
+  return parseInput(readRawInput());
 }
 
 export function clearInput(): void {
@@ -44,5 +37,24 @@ export function clearInput(): void {
     window.sessionStorage.removeItem(INPUT_KEY);
   } catch {
     // 무시
+  }
+}
+
+/** useSyncExternalStore용: 저장된 원문 문자열 (안정적인 스냅샷) */
+export function readRawInput(): string | null {
+  try {
+    return window.sessionStorage.getItem(INPUT_KEY);
+  } catch {
+    return null;
+  }
+}
+
+export function parseInput(raw: string | null): AnalysisInput | null {
+  if (!raw) return null;
+  try {
+    const parsed: unknown = JSON.parse(raw);
+    return isAnalysisInput(parsed) ? parsed : null;
+  } catch {
+    return null;
   }
 }

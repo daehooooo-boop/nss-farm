@@ -6,21 +6,34 @@ import { AnalysisPillars } from "@/components/home/AnalysisPillars";
 import { ResultPreview, type ResultPreviewData } from "@/components/home/ResultPreview";
 import { TypeGallery } from "@/components/home/TypeGallery";
 import { ClosingCta } from "@/components/home/ClosingCta";
+import { analyzeNames } from "@/lib/analysis";
+import { buildReport } from "@/lib/report/buildReport";
+import { RELATION_TYPES } from "@/data/relationTypes";
+import { relationOption } from "@/data/relations";
 
-// TODO(STEP 6): 분석 엔진 출력으로 교체
+// 결과 예시는 실제 분석 엔진 출력으로 만든다 (가상의 이름)
+const sample = analyzeNames({
+  a: { name: "하윤", hanja: "", meaning: "여름처럼 밝은 빛" },
+  b: { name: "도현", hanja: "", meaning: "길을 밝히는 지혜" },
+  relation: "lover",
+});
+const sampleReport = buildReport(sample);
 const SAMPLE: ResultPreviewData = {
-  nameA: "하윤",
-  nameB: "도현",
-  relationLabel: "연인",
-  total: 84,
-  grade: "깊은 조화",
-  typeLabel: "BALANCE TYPE",
-  typeTitle: "서로의 균형을 맞추는 관계",
-  quote: "서로 다른 두 이름이 만나 하나의 특별한 리듬을 만듭니다.",
+  nameA: sample.features.a.name,
+  nameB: sample.features.b.name,
+  relationLabel: relationOption(sample.input.relation).label,
+  total: sample.total,
+  grade: sample.grade,
+  typeLabel: RELATION_TYPES[sample.type.code].label,
+  typeTitle: RELATION_TYPES[sample.type.code].title,
+  quote: sampleReport.headline,
   sections: [
-    { label: "발음", score: 86 },
-    { label: "구조", score: 82 },
-    { label: "의미", score: null },
+    { label: "발음", score: Math.round(sample.sections.phonetic.score) },
+    { label: "구조", score: Math.round(sample.sections.structure.score) },
+    {
+      label: "의미",
+      score: sample.sections.meaning.status === "available" ? Math.round(sample.sections.meaning.score) : null,
+    },
   ],
 };
 

@@ -37,7 +37,15 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="ko"
       className={`${instrumentSerif.variable} ${notoSerifKr.variable} h-full antialiased`}
     >
-      <body className="flex min-h-full flex-col">{children}</body>
+      <body className="flex min-h-full flex-col">
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[60] focus:rounded-full focus:bg-ink focus:px-4 focus:py-2 focus:text-paper"
+        >
+          본문 바로가기
+        </a>
+        {children}
+      </body>
     </html>
   );
 }

@@ -1,11 +1,13 @@
 "use client";
 
-import { useMemo, useRef, useState, type FormEvent } from "react";
+import { useCallback, useMemo, useRef, useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowRight, Lock } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { PersonCard } from "@/components/analyze/PersonCard";
 import { RelationPicker } from "@/components/analyze/RelationPicker";
+import { AnalyzingScreen } from "@/components/analyze/AnalyzingScreen";
+import { analyzeNames } from "@/lib/analysis";
 import { personLabels } from "@/data/relations";
 import { nameMinLength, validateInput } from "@/lib/analysis/validate";
 import { saveInput } from "@/lib/storage/session";
@@ -22,6 +24,8 @@ export function AnalyzeForm() {
   const [touched, setTouched] = useState<Touched>({ a: {}, b: {} });
   const [submitted, setSubmitted] = useState(false);
   const [storageError, setStorageError] = useState(false);
+  const [steps, setSteps] = useState<string[] | null>(null);
+  const goToResult = useCallback(() => router.push("/result"), [router]);
 
   const result = useMemo(() => validateInput(draft), [draft]);
   const labels = personLabels(draft.relation);
@@ -65,7 +69,18 @@ export function AnalyzeForm() {
       setStorageError(true);
       return;
     }
-    router.push("/result");
+    // 엔진은 즉시 계산된다. 진행 화면은 실제 단계(분해 → 발음 → 의미 → 리포트)를 짧게 보여줄 뿐이다.
+    const analysis = analyzeNames(result.value);
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      goToResult();
+      return;
+    }
+    setSteps([
+      "두 사람의 이름을 살펴보고 있습니다.",
+      "이름의 울림을 비교하고 있습니다.",
+      ...(analysis.sections.meaning.status === "available" ? ["이름에 담긴 의미를 연결하고 있습니다."] : []),
+      "두 사람만의 조화로운 이야기를 만들고 있습니다.",
+    ]);
   }
 
   const relationError = submitted && !result.ok ? result.errors.relation : undefined;
@@ -115,6 +130,7 @@ export function AnalyzeForm() {
           이 브라우저에서 임시 저장을 사용할 수 없어 결과를 열 수 없어요. 개인정보 보호 모드를 끄고 다시 시도해 주세요.
         </p>
       ) : null}
+      {steps ? <AnalyzingScreen steps={steps} onDone={goToResult} /> : null}
     </form>
   );
 }

@@ -108,3 +108,9 @@
     scroll-behavior: auto !important;
   }
 }
+
+@keyframes ring-in {
+  from {
+    stroke-dasharray: 0 var(--ring-c);
+  }
+}

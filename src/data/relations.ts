@@ -13,7 +13,7 @@ export const RELATION_OPTIONS: RelationOption[] = [
   { value: "friend", label: "친구", pair: "두 친구" },
   { value: "family", label: "가족", pair: "두 가족" },
   { value: "colleague", label: "동료", pair: "두 동료" },
-  { value: "pet", label: "반려동물", pair: "함께 사는 두 이름" },
+  { value: "pet", label: "반려동물", pair: "둘" },
   { value: "other", label: "기타", pair: "두 사람" },
 ];
 
