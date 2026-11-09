@@ -1,36 +1,61 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# NAME SYNERGY
 
-## Getting Started
+**Two Names, One Connection.**
 
-First, run the development server:
+NAME SYNERGY는 두 사람의 이름을 바탕으로 발음, 구조, 의미의 조화를 분석하고,
+두 사람의 관계를 감성적인 디지털 매거진 형태의 리포트로 보여주는 웹 서비스입니다.
+연인, 부부, 친구, 가족, 동료 등 다양한 관계에서 사용할 수 있습니다.
+
+> 이름 조화 지수는 이름의 특징을 비교해 보여주는 **엔터테인먼트 콘텐츠 지표**이며,
+> 과학적으로 검증된 궁합 점수가 아닙니다.
+
+## 주요 기능 (PHASE 1 MVP)
+
+- 두 사람의 이름 입력 (한글 2~5자), 한자·이름 의미 입력(선택)
+- 관계 유형 선택: 연인 · 부부 · 친구 · 가족 · 동료 · 기타
+- 규칙 기반 이름 분석 엔진: 발음 조화 · 구조 균형 · 의미 조화
+- 이름 조화 지수(0~100)와 점수 근거 설명
+- 관계 유형 분류: BALANCE · HARMONY · COMPLEMENT · RHYTHM · SYNERGY
+- 결과 이미지 저장, 결과 텍스트 복사, 모바일 공유(Web Share API)
+- 회원가입 없음, 이름은 서버에 저장하지 않음
+
+## 기술 스택
+
+Next.js 16 (App Router) · React 19 · TypeScript · Tailwind CSS 4 · lucide-react · Vitest
+
+## 실행 방법
+
+필요 환경: Node.js 20.9 이상 (권장 22), npm
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev        # http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+기타 명령어:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run build      # 프로덕션 빌드
+npm run start      # 빌드 결과 실행
+npm run lint       # 린트
+npm test           # 분석 엔진 단위 테스트
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+환경변수는 현재 필요하지 않습니다. 이후 필요해지면 `.env.local`에 두며, 이 파일은 Git에 포함되지 않습니다.
 
-## Learn More
+## 문서
 
-To learn more about Next.js, take a look at the following resources:
+| 문서 | 내용 |
+| --- | --- |
+| [CLAUDE.md](./CLAUDE.md) | 개발 규칙 |
+| [docs/PRD.md](./docs/PRD.md) | 제품 요구사항 |
+| [docs/DESIGN_GUIDE.md](./docs/DESIGN_GUIDE.md) | 브랜드 및 디자인 가이드 |
+| [docs/ANALYSIS_RULES.md](./docs/ANALYSIS_RULES.md) | 분석 및 점수 계산 규칙 |
+| [docs/IMPLEMENTATION_PLAN.md](./docs/IMPLEMENTATION_PLAN.md) | 단계별 구현 계획 |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 로드맵
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **PHASE 1** 이름 조화 분석 MVP (현재)
+- **PHASE 2** 생년월일·출생시간 기반 사주 결합 분석
+- **PHASE 3** NAME SCANNER: 인기 이름, 희소성, 한자·의미 검색
+- **PHASE 4** NAMING LAB: 신생아 작명, 개명, 전문 작명소 상담 연결
