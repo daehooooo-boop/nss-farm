@@ -41,7 +41,16 @@ npm run lint       # 린트
 npm test           # 분석 엔진 단위 테스트
 ```
 
-환경변수는 현재 필요하지 않습니다. 이후 필요해지면 `.env.local`에 두며, 이 파일은 Git에 포함되지 않습니다.
+서비스 주소: https://nss-farm.vercel.app (Vercel 프로젝트 이름 `nss-farm`)
+
+환경변수는 필수가 아닙니다. 다른 주소로 배포하면 `NEXT_PUBLIC_SITE_URL`에 그 주소를 넣으세요(SEO 메타·sitemap에 쓰임). 이후 필요해지면 `.env.local`에 두며, 이 파일은 Git에 포함되지 않습니다.
+
+## 배포 (Vercel)
+
+1. 이 코드를 GitHub 저장소에 올립니다.
+2. Vercel에서 **Add New → Project → Import**로 저장소를 고르고, Project Name을 `nss-farm`으로 정합니다.
+3. Framework는 Next.js로 자동 인식되며 설정 변경 없이 Deploy 하면 `https://nss-farm.vercel.app`이 생깁니다.
+4. 이후 기본 브랜치에 push하면 자동으로 다시 배포됩니다.
 
 ## 문서
 
