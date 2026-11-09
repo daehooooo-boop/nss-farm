@@ -10,7 +10,7 @@ import {
   SONORANTS,
   TENSE,
 } from "@/lib/analysis/constants";
-import { TONE_PHRASE, endingPhrase, initialPhrase } from "@/lib/analysis/features";
+import { TONE_PHRASE, initialPhrase } from "@/lib/analysis/features";
 import type { FlowJunction, FlowKind, NameFeatures, PhoneticSection, ScoreItem } from "@/lib/analysis/types";
 
 export const clamp01 = (v: number) => Math.min(1, Math.max(0, v));
