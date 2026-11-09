@@ -86,9 +86,7 @@ export function AnalyzeForm() {
   const relationError = submitted && !result.ok ? result.errors.relation : undefined;
 
   return (
-    <form ref={formRef} noValidate onSubmit={handleSubmit} className="space-y-10">
-      <RelationPicker value={draft.relation} error={relationError} onChange={selectRelation} />
-
+    <form ref={formRef} noValidate onSubmit={handleSubmit} className="space-y-8">
       <div className="relative grid gap-4 lg:grid-cols-2 lg:items-start lg:gap-6">
         {(["a", "b"] as const).map((key) => (
           <PersonCard
@@ -110,6 +108,8 @@ export function AnalyzeForm() {
           ×
         </span>
       </div>
+
+      <RelationPicker value={draft.relation} error={relationError} onChange={selectRelation} />
 
       <div className="flex flex-col items-stretch gap-4 border-t border-line pt-8 sm:flex-row sm:items-center sm:justify-between">
         <p className="inline-flex items-center gap-1.5 text-[13px] text-ink-faint">

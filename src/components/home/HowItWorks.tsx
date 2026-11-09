@@ -4,7 +4,7 @@ import { HOW_IT_WORKS } from "@/data/homeContent";
 
 export function HowItWorks() {
   return (
-    <section aria-labelledby="about-title" className="border-t border-line py-20 md:py-28 lg:py-32">
+    <section id="about" aria-labelledby="about-title" className="scroll-mt-16 border-t border-line py-20 md:py-28 lg:py-32">
       <Container>
         <SectionHeading
           id="about-title"

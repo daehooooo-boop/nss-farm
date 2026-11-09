@@ -21,7 +21,7 @@ export function Header({ showCta = true }: { showCta?: boolean }) {
           <Wordmark />
         </Link>
         {showCta ? (
-          <Link href="/analyze" className={buttonClass("secondary", "md", "h-10 px-4 text-sm")}>
+          <Link href="/#start" className={buttonClass("secondary", "md", "h-10 px-4 text-sm")}>
             분석하기
           </Link>
         ) : null}
