@@ -37,44 +37,46 @@ Editorial Design · Modern Minimalism · Digital Magazine · Human Connection ·
 ## 2. 핵심 시각 아이디어: "두 개의 선, 하나의 교차"
 
 - 사이트 전체는 **블랙 & 화이트 모노크롬**이다. 색 대신 채움과 선, 밝기 차이로 두 사람을 구분한다.
-- **A = 흰색 채움(solid)**, **B = 회색 외곽선(outline)**. 배지·이름·그래픽에서 이 규칙을 지킨다.
-- A와 B가 섞이는 순간은 **조화 지수 링**과 **공유 이미지** 두 곳(흰색→회색 그라디언트)뿐이다.
+- **A = 검정 채움(solid)**, **B = 회색 외곽선(outline)**. 배지·이름·그래픽에서 이 규칙을 지킨다.
+- A와 B가 섞이는 순간은 **조화 지수 링**과 **공유 이미지** 두 곳(검정→회색 그라디언트)뿐이다.
 - 기본 그래픽 모티프: 두 개의 얇은 원이 겹치는 형태. 로고 심볼, 로딩, 점수 시각화에 일관되게 쓴다.
 
 ---
 
 ## 3. 색상
 
-### 3.1 토큰 (2026-11-15 흑백 리디자인)
+### 3.1 토큰 (2026-11-15 흑백 리디자인, 흰 배경)
 
 | 토큰 | HEX | 용도 | 대비 (paper 위) |
 | --- | --- | --- | --- |
-| `paper` | `#0A0A0A` | 기본 배경 (거의 검정) | — |
-| `surface` | `#141414` | 카드, 입력 필드 배경 | — |
-| `ink` | `#F5F5F5` | 본문·제목 기본 텍스트 | 18.1:1 |
-| `ink-soft` | `#B3B3B3` | 보조 텍스트, 캡션 | 9.6:1 |
-| `ink-faint` | `#8F8F8F` | 플레이스홀더, 메타 정보 (최소 13px) | 6.1:1 |
-| `line` | `#262626` | 구분선, 카드 테두리 | 장식용 |
-| `line-strong` | `#3D3D3D` | 입력 필드·칩 테두리 | 장식용 |
-| `person-a` | `#FFFFFF` | Person A (흰색 채움) | 19.8:1 |
-| `person-a-tint` | `#1A1A1A` | Person A 배경 틴트 | — |
-| `person-b` | `#A6A6A6` | Person B (회색, 텍스트 가능) | 8.0:1 |
-| `person-b-bright` | `#7A7A7A` | Person B 그래픽 전용 | — |
-| `person-b-tint` | `#121212` | Person B 배경 틴트 | — |
-| `night` | `#F5F5F5` | 반전 블록 배경 (결과 커버, 푸터): 흰 바탕에 검은 글자 | — |
-| `success` | `#E5E5E5` | 복사 완료 등 긍정 피드백 | — |
-| `danger` | `#FF8080` | 입력 오류 문구 (유일한 유채색, 오류에만) | 7.4:1 |
+| `paper` | `#FFFFFF` | 기본 배경 (흰색) | — |
+| `surface` | `#FFFFFF` | 카드, 입력 필드 배경 (테두리로 구분) | — |
+| `ink` | `#0A0A0A` | 본문·제목 기본 텍스트 | 19.8:1 |
+| `ink-soft` | `#4D4D4D` | 보조 텍스트, 캡션 | 8.5:1 |
+| `ink-faint` | `#6B6B6B` | 플레이스홀더, 메타 정보 (최소 13px) | 5.3:1 |
+| `line` | `#E8E8E8` | 구분선, 카드 테두리 | 장식용 |
+| `line-strong` | `#C4C4C4` | 입력 필드·칩 테두리 | 장식용 |
+| `person-a` | `#0A0A0A` | Person A (검정 채움) | 19.8:1 |
+| `person-a-tint` | `#F4F4F4` | Person A 배경 틴트 | — |
+| `person-a-night` | `#FFFFFF` | night 블록 위 Person A | — |
+| `person-b` | `#6E6E6E` | Person B (회색, 텍스트 가능) | 5.1:1 |
+| `person-b-bright` | `#9E9E9E` | Person B 그래픽 전용 (텍스트 금지) | — |
+| `person-b-tint` | `#FAFAFA` | Person B 배경 틴트 | — |
+| `person-b-night` | `#A6A6A6` | night 블록 위 Person B | — |
+| `night` | `#0A0A0A` | 반전 블록 배경 (결과 커버, 푸터): 검은 바탕에 흰 글자 | — |
+| `success` | `#0A0A0A` | 복사 완료 등 긍정 피드백 | 19.8:1 |
+| `danger` | `#C62828` | 입력 오류 문구 (유일한 유채색, 오류에만) | 5.6:1 |
 
-- 시그니처 그라디언트 `synergy`: `linear-gradient(120deg, #FFFFFF, #6B6B6B)`. 조화 지수와 공유 카드에서만 쓴다.
-- `night` 블록 위 텍스트는 `text-paper`를 쓰고, 불투명도는 **60% 이상**(약 5:1)만 허용한다. 40·50%는 AA 미달이라 금지.
+- 시그니처 그라디언트 `synergy`: `linear-gradient(120deg, #0A0A0A, #6B6B6B)`. 조화 지수와 공유 카드에서만 쓴다.
+- `night` 블록 위 텍스트는 `text-paper`를 쓰고, 불투명도는 **60% 이상**만 허용한다.
 
 ### 3.2 사용 비율
 
-검정 75% · 흰색 텍스트 20% · 회색 5%. 유채색은 오류 문구 외에 쓰지 않는다.
+흰색 75% · 검정 텍스트 20% · 회색 5%. 유채색은 오류 문구 외에 쓰지 않는다.
 
-### 3.3 다크 모드
+### 3.3 테마
 
-사이트 자체가 다크 단일 테마다(`color-scheme: dark`, `theme-color #0A0A0A`). 결과 커버와 푸터만 흰색 `night` 반전 블록으로 대비를 만든다.
+라이트 단일 테마다(`color-scheme: light`, `theme-color #FFFFFF`). 결과 커버와 푸터만 검은 `night` 반전 블록으로 대비를 만든다. 공유 카드와 OG 이미지는 흰 배경.
 
 ---
 
@@ -157,13 +159,13 @@ CSS 변수: `--font-display`(Space Grotesk), `--font-serif-kr`(이름은 유지,
 
 ```
 ┌──────────────────────────┐
-│ 이름 궁합            (상단)│  Pretendard 700, #F5F5F5
+│ 이름 궁합            (상단)│  Pretendard 700, #0A0A0A
 │                          │
-│   김민준                  │  Pretendard 800, #FFFFFF (A)
+│   김민준                  │  Pretendard 800, #0A0A0A (A)
 │      ×                   │
-│   이서연                  │  Pretendard 800, #A6A6A6 (B)
+│   이서연                  │  Pretendard 800, #8C8C8C (B)
 │                          │
-│   87                     │  Space Grotesk 대형 숫자 + 흰→회색 링
+│   87                     │  Space Grotesk 대형 숫자 + 검정→회색 링
 │   이름 조화 지수           │
 │                          │
 │   HARMONY TYPE           │  eyebrow
@@ -175,7 +177,7 @@ CSS 변수: `--font-display`(Space Grotesk), `--font-serif-kr`(이름은 유지,
 └──────────────────────────┘
 ```
 
-배경 `#0A0A0A`, 상하 여백 160px, 좌우 96px. 이름이 5자여도 한 줄에 들어가야 한다.
+배경 `#FFFFFF`, 상하 여백 160px, 좌우 96px. 이름이 5자여도 한 줄에 들어가야 한다.
 
 ## 9. 보이스 & 톤 (UI 카피)
 

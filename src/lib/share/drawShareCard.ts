@@ -18,10 +18,10 @@ export const CARD_WIDTH = 1080;
 export const CARD_HEIGHT = 1920;
 
 const COLOR = {
-  night: "#0a0a0a",
-  paper: "#f5f5f5",
-  a: "#ffffff",
-  b: "#a6a6a6",
+  night: "#ffffff",
+  paper: "#0a0a0a",
+  a: "#0a0a0a",
+  b: "#8c8c8c",
 };
 
 function cssFont(variable: string, fallback: string): string {
@@ -112,7 +112,7 @@ export async function drawShareCard(data: ShareCardData): Promise<HTMLCanvasElem
 
   ctx.font = `600 30px ${sans}`;
   ctx.textAlign = "right";
-  ctx.fillStyle = "rgba(245,245,245,0.7)";
+  ctx.fillStyle = "rgba(10,10,10,0.7)";
   ctx.fillText(data.relationLabel, CARD_WIDTH - left, 162);
 
   // 이름
@@ -126,7 +126,7 @@ export async function drawShareCard(data: ShareCardData): Promise<HTMLCanvasElem
   ctx.fillStyle = COLOR.a;
   ctx.fillText(data.nameA, cx, 470);
   ctx.font = `500 84px ${display}`;
-  ctx.fillStyle = "rgba(245,245,245,0.45)";
+  ctx.fillStyle = "rgba(10,10,10,0.45)";
   ctx.fillText("×", cx, 590);
   ctx.font = `800 ${nameSize}px ${serifKr}`;
   ctx.fillStyle = COLOR.b;
@@ -136,7 +136,7 @@ export async function drawShareCard(data: ShareCardData): Promise<HTMLCanvasElem
   const ringY = 1060;
   const r = 190;
   ctx.lineWidth = 10;
-  ctx.strokeStyle = "rgba(245,245,245,0.12)";
+  ctx.strokeStyle = "rgba(10,10,10,0.12)";
   ctx.beginPath();
   ctx.arc(cx, ringY, r, 0, Math.PI * 2);
   ctx.stroke();
@@ -154,7 +154,7 @@ export async function drawShareCard(data: ShareCardData): Promise<HTMLCanvasElem
   ctx.font = `400 210px ${display}`;
   ctx.fillText(String(data.total), cx, ringY + 62);
   ctx.font = `600 24px ${sans}`;
-  ctx.fillStyle = "rgba(245,245,245,0.6)";
+  ctx.fillStyle = "rgba(10,10,10,0.6)";
   ctx.fillText("이름 조화 지수", cx, ringY + 112);
 
   ctx.font = `700 52px ${serifKr}`;
@@ -163,7 +163,7 @@ export async function drawShareCard(data: ShareCardData): Promise<HTMLCanvasElem
 
   // 관계 유형
   const typeY = 1510;
-  ctx.strokeStyle = "rgba(245,245,245,0.15)";
+  ctx.strokeStyle = "rgba(10,10,10,0.15)";
   ctx.lineWidth = 2;
   ctx.beginPath();
   ctx.moveTo(left, typeY - 90);
@@ -173,7 +173,7 @@ export async function drawShareCard(data: ShareCardData): Promise<HTMLCanvasElem
   ctx.fillStyle = COLOR.paper;
   ctx.fillText(`${data.typeCode} TYPE`, cx, typeY);
   ctx.font = `600 34px ${sans}`;
-  ctx.fillStyle = "rgba(245,245,245,0.85)";
+  ctx.fillStyle = "rgba(10,10,10,0.85)";
   ctx.fillText(data.typeTitle, cx, typeY + 64);
 
   // 핵심 메시지
@@ -184,10 +184,10 @@ export async function drawShareCard(data: ShareCardData): Promise<HTMLCanvasElem
 
   // 하단
   ctx.font = `500 34px ${display}`;
-  ctx.fillStyle = "rgba(245,245,245,0.5)";
+  ctx.fillStyle = "rgba(10,10,10,0.6)";
   ctx.fillText("Two Names, One Connection.", cx, CARD_HEIGHT - 110);
   ctx.font = `500 22px ${sans}`;
-  ctx.fillStyle = "rgba(245,245,245,0.4)";
+  ctx.fillStyle = "rgba(10,10,10,0.55)";
   ctx.fillText("재미로 보는 엔터테인먼트 콘텐츠", cx, CARD_HEIGHT - 66);
 
   return canvas;

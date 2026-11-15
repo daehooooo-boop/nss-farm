@@ -113,4 +113,4 @@
 
 ## 디자인 변경 기록
 
-- 2026-11-15 흑백 리디자인: 다크 모노크롬 토큰, Space Grotesk·Pretendard·JetBrains Mono로 서체 교체(STEP 2의 Instrument Serif·Noto Serif KR은 더 이상 쓰지 않음). 홈 입력 폼 압축으로 375×548에서도 이름·관계·분석하기가 한 화면에 보임. axe(WCAG 2 AA) 홈·결과 위반 0건.
+- 2026-11-15 흑백 리디자인: 모노크롬 토큰(같은 날 사용자 요청으로 기본 배경을 흰색으로 변경), Space Grotesk·Pretendard·JetBrains Mono로 서체 교체(STEP 2의 Instrument Serif·Noto Serif KR은 더 이상 쓰지 않음). 홈 입력 폼 압축으로 375×548에서도 이름·관계·분석하기가 한 화면에 보임. axe(WCAG 2 AA) 홈·결과 위반 0건.
