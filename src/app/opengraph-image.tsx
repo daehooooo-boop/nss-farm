@@ -32,7 +32,7 @@ export default async function OpengraphImage() {
         </svg>
         <div style={{ marginTop: 44, fontSize: 96, letterSpacing: -2 }}>이름 궁합</div>
         <div style={{ marginTop: 14, fontSize: 34, color: "rgba(10,10,10,0.6)" }}>
-          두 사람의 이름이 만드는 조화 · Two Names, One Connection.
+          우리 둘 사이는 몇 점? · 이름으로 알아보는 이름 궁합
         </div>
       </div>
     ),

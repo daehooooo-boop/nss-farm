@@ -10,14 +10,12 @@ export function Hero() {
         <div className="animate-rise">
           <h1
             id="hero-title"
-            className="font-serif-kr text-[20px] leading-[1.35] font-extrabold md:text-[40px] lg:text-[52px] lg:leading-[1.2]"
+            className="font-serif-kr text-[30px] leading-[1.2] font-extrabold md:text-[52px] lg:text-[64px]"
           >
-            두 사람의 이름에는
-            <br />
-            어떤 이야기가 숨어 있을까요?
+            우리 둘 사이는 몇 점?
           </h1>
-          <p className="mt-4 hidden text-[17px] leading-[1.6] text-ink-soft md:block">
-            이름의 의미와 울림을 통해 두 사람의 특별한 조화를 발견해 보세요.
+          <p className="mt-1.5 text-[15px] leading-[1.5] font-medium text-ink-soft md:mt-4 md:text-[19px]">
+            이름으로 알아보는 이름 궁합
           </p>
         </div>
 
