@@ -58,7 +58,7 @@ export function ResultPreview({ data }: { data: ResultPreviewData }) {
               <div className="h-1 rounded-full bg-paper" style={{ width: `${data.total}%` }} />
             </div>
 
-            <dl className="mt-8 grid grid-cols-3 gap-3 border-t border-paper/15 pt-6">
+            <dl className="mt-8 grid grid-cols-2 gap-3 border-t border-paper/15 pt-6">
               {data.sections.map((s) => (
                 <div key={s.label}>
                   <dt className="text-[12px] text-paper/60">{s.label}</dt>

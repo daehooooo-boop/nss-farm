@@ -13,7 +13,7 @@ export function AnalysisPillars() {
           title="세 가지 관점으로 이름을 읽어요"
           description="모든 계산은 공개된 규칙을 따르고, 같은 이름이면 언제나 같은 결과가 나와요."
         />
-        <ul className="mt-14 grid gap-5 md:grid-cols-3">
+        <ul className="mt-14 grid gap-5 md:grid-cols-2">
           {ANALYSIS_PILLARS.map((pillar) => (
             <li
               key={pillar.key}
@@ -39,7 +39,7 @@ export function AnalysisPillars() {
           ))}
         </ul>
         <p className="mt-6 text-[13px] leading-[1.6] text-ink-faint">
-          이름의 뜻을 입력하지 않으면 의미 항목은 빼고, 발음 57% · 구조 43%로 다시 나눠 계산해요. 입력하지 않은 뜻을 지어내지 않아요.
+          이름의 뜻이나 한자를 짐작해 점수에 넣지 않아요. 소리와 짜임새만으로 계산하기 때문에 같은 이름이면 언제나 같은 결과가 나와요.
         </p>
       </Container>
     </section>

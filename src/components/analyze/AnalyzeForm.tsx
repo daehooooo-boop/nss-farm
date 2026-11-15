@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import { ArrowRight, Lock } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { NameField } from "@/components/analyze/NameField";
-import { DetailsPanel } from "@/components/analyze/DetailsPanel";
 import { RelationPicker } from "@/components/analyze/RelationPicker";
 import { AnalyzingScreen } from "@/components/analyze/AnalyzingScreen";
 import { analyzeNames } from "@/lib/analysis";
@@ -110,13 +109,6 @@ export function AnalyzeForm() {
         />
       </div>
 
-      <DetailsPanel
-        draft={draft}
-        labels={labels}
-        errors={errors}
-        onChange={update}
-        onBlur={blur}
-      />
 
       <RelationPicker value={draft.relation} error={relationError} onChange={selectRelation} />
 

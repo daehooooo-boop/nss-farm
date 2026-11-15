@@ -13,8 +13,8 @@ import { relationOption } from "@/data/relations";
 
 // 결과 예시는 실제 분석 엔진 출력으로 만든다 (가상의 이름)
 const sample = analyzeNames({
-  a: { name: "하윤", hanja: "", meaning: "여름처럼 밝은 빛" },
-  b: { name: "도현", hanja: "", meaning: "길을 밝히는 지혜" },
+  a: { name: "하윤", hanja: "", meaning: "" },
+  b: { name: "도현", hanja: "", meaning: "" },
   relation: "lover",
 });
 const sampleReport = buildReport(sample);
@@ -30,10 +30,6 @@ const SAMPLE: ResultPreviewData = {
   sections: [
     { label: "발음", score: Math.round(sample.sections.phonetic.score) },
     { label: "구조", score: Math.round(sample.sections.structure.score) },
-    {
-      label: "의미",
-      score: sample.sections.meaning.status === "available" ? Math.round(sample.sections.meaning.score) : null,
-    },
   ],
 };
 

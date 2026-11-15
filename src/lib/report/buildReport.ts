@@ -72,7 +72,6 @@ export function buildReport(result: AnalysisResult): Report {
     `두 이름은 ${type.label}, ‘${type.title}’로 분류됩니다.`,
   ];
   if (result.sameName) summary.push("같은 이름을 나눠 가진 만큼, 소리와 구조는 완전히 같은 결을 가졌어요.");
-  if (meaning.status !== "available") summary.push("이름의 뜻을 더하면 이야기가 더 풍부해져요.");
 
   // 두 이름이 만드는 이미지
   const [ab] = phonetic.flow.junctions;

@@ -1,14 +1,13 @@
 "use client";
 
 import { useMemo, useSyncExternalStore } from "react";
-import Link from "next/link";
 import { ArrowRight, RotateCcw } from "lucide-react";
 import { analyzeNames } from "@/lib/analysis";
 import { buildReport } from "@/lib/report/buildReport";
 import { parseInput, readRawInput } from "@/lib/storage/session";
 import { RELATION_TYPES } from "@/data/relationTypes";
 import { relationOption } from "@/data/relations";
-import { ButtonLink, buttonClass } from "@/components/ui/Button";
+import { ButtonLink } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { ScoreRing } from "@/components/result/ScoreRing";
 import { SectionBlock } from "@/components/result/SectionBlock";
@@ -39,6 +38,8 @@ export function ResultView() {
   const type = RELATION_TYPES[result.type.code];
   const relation = relationOption(result.input.relation);
   const weights = result.weights;
+  // 이름의 뜻 입력은 2026-11-15 화면에서 뺐다. 뜻 자료가 있을 때만 의미 항목을 보여 준다.
+  const hasMeaning = meaning.status === "available";
 
   return (
     <article>
@@ -65,11 +66,11 @@ export function ResultView() {
             <div>
               <p className="text-[13px] text-paper/60">이름 조화 지수</p>
               <p className="mt-1 font-serif-kr text-[28px] font-bold">{result.grade}</p>
-              <dl className="mt-6 grid grid-cols-3 gap-3 border-t border-paper/15 pt-5">
+              <dl className={`mt-6 grid gap-3 border-t border-paper/15 pt-5 ${hasMeaning ? "grid-cols-3" : "grid-cols-2"}`}>
                 {[
                   { label: "발음", score: phonetic.score, w: weights.phonetic },
                   { label: "구조", score: structure.score, w: weights.structure },
-                  { label: "의미", score: meaning.status === "available" ? meaning.score : null, w: weights.meaning },
+                  ...(hasMeaning ? [{ label: "의미", score: meaning.score, w: weights.meaning }] : []),
                 ].map((s) => (
                   <div key={s.label}>
                     <dt className="text-[12px] text-paper/60">{s.label}</dt>
@@ -81,9 +82,6 @@ export function ResultView() {
                 ))}
               </dl>
               <p className="mt-5 text-[12px] leading-[1.6] text-paper/60">
-                {weights.meaning === null
-                  ? "이름의 뜻 자료가 없어 의미 항목은 빼고 발음과 구조만으로 계산했어요. "
-                  : ""}
                 이름 조화 지수는 이름의 특징을 비교한 엔터테인먼트 지표이며, 과학적 궁합 점수가 아니에요.
               </p>
             </div>
@@ -126,52 +124,37 @@ export function ResultView() {
           </ul>
         </SectionBlock>
 
-        {/* 03 의미 */}
+        {/* 03 의미: 뜻 자료가 있을 때만 */}
+        {hasMeaning ? (
         <SectionBlock
           index="03"
           label="Meaning"
           title="의미의 조화"
-          score={meaning.status === "available" ? meaning.score : null}
+          score={meaning.score}
           weight={weights.meaning}
         >
-          {meaning.status === "available" ? (
-            <>
-              <dl className="mb-6 grid gap-3 sm:grid-cols-2">
-                <div className="rounded-[var(--radius-field)] bg-person-a-tint p-4">
-                  <dt className="text-[13px] font-semibold text-person-a">{a.name}의 뜻</dt>
-                  <dd className="mt-1 text-[15px]">“{result.input.a.meaning}”</dd>
-                  <dd className="mt-2 text-[13px] text-ink-soft">{meaning.categories.a.join(" · ")}</dd>
-                </div>
-                <div className="rounded-[var(--radius-field)] bg-person-b-tint p-4">
-                  <dt className="text-[13px] font-semibold text-person-b">{b.name}의 뜻</dt>
-                  <dd className="mt-1 text-[15px]">“{result.input.b.meaning}”</dd>
-                  <dd className="mt-2 text-[13px] text-ink-soft">{meaning.categories.b.join(" · ")}</dd>
-                </div>
-              </dl>
-              <ul>
-                {meaning.items.map((item) => (
-                  <ScoreItemRow key={item.code} item={item} />
-                ))}
-              </ul>
-            </>
-          ) : (
-            <div className="rounded-[var(--radius-card)] border border-dashed border-line-strong p-6">
-              <p className="text-[15px] font-semibold">{meaning.message}</p>
-              {meaning.hint ? <p className="mt-2 text-[14px] leading-[1.6] text-ink-faint">{meaning.hint}</p> : null}
-              {meaning.sharedHanja.length > 0 ? (
-                <p className="mt-3 text-[14px] text-ink-soft">
-                  참고: 두 이름이 ‘{meaning.sharedHanja.join("’, ‘")}’ 자를 함께 쓰고 있어요.
-                </p>
-              ) : null}
-              <Link href="/analyze" className={buttonClass("ghost", "md", "mt-3")}>
-                이름의 뜻 입력하러 가기
-              </Link>
-            </div>
-          )}
+            <dl className="mb-6 grid gap-3 sm:grid-cols-2">
+              <div className="rounded-[var(--radius-field)] bg-person-a-tint p-4">
+                <dt className="text-[13px] font-semibold text-person-a">{a.name}의 뜻</dt>
+                <dd className="mt-1 text-[15px]">“{result.input.a.meaning}”</dd>
+                <dd className="mt-2 text-[13px] text-ink-soft">{meaning.categories.a.join(" · ")}</dd>
+              </div>
+              <div className="rounded-[var(--radius-field)] bg-person-b-tint p-4">
+                <dt className="text-[13px] font-semibold text-person-b">{b.name}의 뜻</dt>
+                <dd className="mt-1 text-[15px]">“{result.input.b.meaning}”</dd>
+                <dd className="mt-2 text-[13px] text-ink-soft">{meaning.categories.b.join(" · ")}</dd>
+              </div>
+            </dl>
+            <ul>
+              {meaning.items.map((item) => (
+                <ScoreItemRow key={item.code} item={item} />
+              ))}
+            </ul>
         </SectionBlock>
+        ) : null}
 
         {/* 04 관계 유형 */}
-        <SectionBlock index="04" label="Type" title="두 이름의 관계 유형">
+        <SectionBlock index={hasMeaning ? "04" : "03"} label="Type" title="두 이름의 관계 유형">
           <div className="rounded-[var(--radius-card)] bg-night p-7 text-paper md:p-9">
             <p className="font-display text-[44px] leading-none md:text-[56px]">
               {type.label.replace(" TYPE", "")}
@@ -194,7 +177,7 @@ export function ResultView() {
         </SectionBlock>
 
         {/* 05 스토리 */}
-        <SectionBlock index="05" label="Story" title="두 이름으로 쓴 이야기">
+        <SectionBlock index={hasMeaning ? "05" : "04"} label="Story" title="두 이름으로 쓴 이야기">
           <blockquote className="border-l-2 border-ink pl-5 font-serif-kr text-[19px] leading-[1.85] md:text-[22px]">
             {report.story.map((p) => (
               <p key={p} className="mt-4 first:mt-0">
