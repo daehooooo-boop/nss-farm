@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "pretendard/dist/web/variable/pretendardvariable-dynamic-subset.css";
-import "./globals.css";
-import { jetbrainsMono, spaceGrotesk } from "./fonts";
+import "../globals.css";
+import { RootShell } from "@/components/layout/RootShell";
 import { SITE } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -13,6 +13,7 @@ export const metadata: Metadata = {
   description: SITE.description,
   applicationName: SITE.name,
   keywords: ["이름 궁합", "이름 조화", "커플 이름", "이름 분석", "이름 궁합 테스트", "NAME SYNERGY"],
+  alternates: { languages: { ko: "/", en: "/en" } },
   openGraph: {
     type: "website",
     locale: "ko_KR",
@@ -31,22 +32,6 @@ export const viewport: Viewport = {
   themeColor: "#ffffff",
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
-  return (
-    <html
-      lang="ko"
-      style={{ colorScheme: "light" }}
-      className={`${spaceGrotesk.variable} ${jetbrainsMono.variable} h-full antialiased`}
-    >
-      <body className="flex min-h-full flex-col">
-        <a
-          href="#main"
-          className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[60] focus:rounded-full focus:bg-ink focus:px-4 focus:py-2 focus:text-paper"
-        >
-          본문 바로가기
-        </a>
-        {children}
-      </body>
-    </html>
-  );
+export default function KoRootLayout({ children }: { children: React.ReactNode }) {
+  return <RootShell locale="ko">{children}</RootShell>;
 }

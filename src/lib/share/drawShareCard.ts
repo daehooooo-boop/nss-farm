@@ -4,6 +4,8 @@
  */
 
 import { MARK_BOX, MARK_PATH } from "@/lib/brand/mark";
+import { getDict } from "@/i18n/dict";
+import type { Locale } from "@/i18n/locale";
 
 export type ShareCardData = {
   nameA: string;
@@ -16,6 +18,7 @@ export type ShareCardData = {
   message: string;
   /** 카드 하단에 적는 사이트 주소 (예: nss-farm.vercel.app) */
   siteHost: string;
+  locale?: Locale;
 };
 
 export const CARD_WIDTH = 1080;
@@ -72,12 +75,13 @@ function fitFont(ctx: CanvasRenderingContext2D, text: string, family: string, we
 }
 
 export async function drawShareCard(data: ShareCardData): Promise<HTMLCanvasElement> {
+  const t = getDict(data.locale ?? "ko").card;
   const display = cssFont("--font-grotesk", "system-ui, sans-serif");
   const sans = '"Pretendard Variable", Pretendard, system-ui, sans-serif';
   const serifKr = sans; // 흑백 리디자인: 한글은 모두 Pretendard
 
   // 카드에 쓰는 글자가 폰트 조각에 포함되도록 미리 불러온다
-  const allText = `이름 궁합 나도 보러 가기→${data.nameA}${data.nameB}${data.grade}${data.message}${data.typeTitle}${data.relationLabel}`;
+  const allText = `${t.brand}${t.index}${t.cta}${t.footer}${data.nameA}${data.nameB}${data.grade}${data.message}${data.typeTitle}${data.relationLabel}`;
   await Promise.allSettled([
     document.fonts.load(`400 64px ${display}`, `0123456789 ${data.typeCode} TYPE ×`),
     document.fonts.load(`500 32px ${display}`, `Two Names, One Connection. × ${data.siteHost}`),
@@ -90,7 +94,7 @@ export async function drawShareCard(data: ShareCardData): Promise<HTMLCanvasElem
   canvas.width = CARD_WIDTH;
   canvas.height = CARD_HEIGHT;
   const ctx = canvas.getContext("2d");
-  if (!ctx) throw new Error("Canvas를 사용할 수 없어요.");
+  if (!ctx) throw new Error(t.canvasError);
 
   const left = 96;
   const contentWidth = CARD_WIDTH - left * 2;
@@ -112,7 +116,7 @@ export async function drawShareCard(data: ShareCardData): Promise<HTMLCanvasElem
   ctx.fillStyle = COLOR.paper;
   ctx.font = `700 46px ${serifKr}`;
   ctx.textAlign = "left";
-  ctx.fillText("이름 궁합", left + 110, 166);
+  ctx.fillText(t.brand, left + 110, 166);
 
   ctx.font = `600 30px ${sans}`;
   ctx.textAlign = "right";
@@ -159,7 +163,7 @@ export async function drawShareCard(data: ShareCardData): Promise<HTMLCanvasElem
   ctx.fillText(String(data.total), cx, ringY + 62);
   ctx.font = `600 24px ${sans}`;
   ctx.fillStyle = "rgba(10,10,10,0.6)";
-  ctx.fillText("이름 조화 지수", cx, ringY + 112);
+  ctx.fillText(t.index, cx, ringY + 112);
 
   ctx.font = `700 52px ${serifKr}`;
   ctx.fillStyle = COLOR.paper;
@@ -196,19 +200,19 @@ export async function drawShareCard(data: ShareCardData): Promise<HTMLCanvasElem
   ctx.fill();
   ctx.font = `700 34px ${sans}`;
   ctx.fillStyle = COLOR.night;
-  ctx.fillText("나도 이름 궁합 보러 가기 →", cx, pillY + 60);
+  ctx.fillText(t.cta, cx, pillY + 60);
   ctx.font = `500 30px ${display}`;
   ctx.fillStyle = "rgba(10,10,10,0.75)";
   ctx.fillText(data.siteHost, cx, CARD_HEIGHT - 100);
   ctx.font = `500 22px ${sans}`;
   ctx.fillStyle = "rgba(10,10,10,0.55)";
-  ctx.fillText("Two Names, One Connection. · 재미로 보는 엔터테인먼트 콘텐츠", cx, CARD_HEIGHT - 60);
+  ctx.fillText(t.footer, cx, CARD_HEIGHT - 60);
 
   return canvas;
 }
 
-export function canvasToBlob(canvas: HTMLCanvasElement): Promise<Blob> {
+export function canvasToBlob(canvas: HTMLCanvasElement, locale: Locale = "ko"): Promise<Blob> {
   return new Promise((resolve, reject) => {
-    canvas.toBlob((blob) => (blob ? resolve(blob) : reject(new Error("이미지를 만들지 못했어요."))), "image/png");
+    canvas.toBlob((blob) => (blob ? resolve(blob) : reject(new Error(getDict(locale).card.blobError))), "image/png");
   });
 }

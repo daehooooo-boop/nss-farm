@@ -1,6 +1,6 @@
 import type { ScoreItem } from "@/lib/analysis/types";
 
-export function ScoreItemRow({ item }: { item: ScoreItem }) {
+export function ScoreItemRow({ item, ariaLabel }: { item: ScoreItem; ariaLabel?: string }) {
   const score = Math.round(item.score);
   return (
     <li className="border-t border-line py-5 first:border-t-0 first:pt-0">
@@ -11,7 +11,7 @@ export function ScoreItemRow({ item }: { item: ScoreItem }) {
       <div
         className="mt-3 h-[3px] rounded-full bg-line"
         role="meter"
-        aria-label={`${item.label} 점수`}
+        aria-label={ariaLabel ?? `${item.label} 점수`}
         aria-valuemin={0}
         aria-valuemax={100}
         aria-valuenow={score}

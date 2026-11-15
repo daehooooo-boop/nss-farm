@@ -1,8 +1,10 @@
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { ANALYSIS_PILLARS } from "@/data/homeContent";
+import { getDict } from "@/i18n/dict";
+import type { Locale } from "@/i18n/locale";
 
-export function AnalysisPillars() {
+export function AnalysisPillars({ locale = "ko" }: { locale?: Locale }) {
+  const t = getDict(locale).method;
   return (
     <section aria-labelledby="method-title" className="py-20 md:py-28 lg:py-32">
       <Container>
@@ -10,11 +12,11 @@ export function AnalysisPillars() {
           id="method-title"
           index="02"
           label="Method"
-          title="세 가지 관점으로 이름을 읽어요"
-          description="모든 계산은 공개된 규칙을 따르고, 같은 이름이면 언제나 같은 결과가 나와요."
+          title={t.title}
+          description={t.description}
         />
         <ul className="mt-14 grid gap-5 md:grid-cols-2">
-          {ANALYSIS_PILLARS.map((pillar) => (
+          {t.pillars.map((pillar) => (
             <li
               key={pillar.key}
               className="flex flex-col rounded-[var(--radius-card)] border border-line bg-surface p-6 md:p-7"
@@ -39,7 +41,7 @@ export function AnalysisPillars() {
           ))}
         </ul>
         <p className="mt-6 text-[13px] leading-[1.6] text-ink-faint">
-          이름의 뜻이나 한자를 짐작해 점수에 넣지 않아요. 소리와 짜임새만으로 계산하기 때문에 같은 이름이면 언제나 같은 결과가 나와요.
+          {t.note}
         </p>
       </Container>
     </section>

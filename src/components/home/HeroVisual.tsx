@@ -1,11 +1,11 @@
 /** 히어로 그래픽: 두 이름(A, B)을 상징하는 원과 그 교차 영역. 장식용. */
-export function HeroVisual({ className = "" }: { className?: string }) {
+export function HeroVisual({ className = "", ariaLabel }: { className?: string; ariaLabel: string }) {
   return (
     <svg
       viewBox="0 0 400 260"
       className={className}
       role="img"
-      aria-label="두 개의 원이 겹쳐 하나의 교차 영역을 만드는 이름 궁합 심볼"
+      aria-label={ariaLabel}
     >
       <defs>
         <linearGradient id="hero-synergy" x1="0" y1="0" x2="1" y2="1">

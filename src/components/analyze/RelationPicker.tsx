@@ -1,21 +1,24 @@
 "use client";
 
-import { RELATION_OPTIONS } from "@/data/relations";
+import type { RelationOption } from "@/data/relations";
 import type { Relation } from "@/lib/analysis/types";
 
 type RelationPickerProps = {
   value: Relation | null;
   error?: string;
   onChange: (value: Relation) => void;
+  options: RelationOption[];
+  legend: string;
+  note: string;
 };
 
 /** 관계 선택: 모바일 4열 그리드, 데스크톱 한 줄 */
-export function RelationPicker({ value, error, onChange }: RelationPickerProps) {
+export function RelationPicker({ value, error, onChange, options, legend, note }: RelationPickerProps) {
   return (
     <fieldset aria-describedby={error ? "relation-error" : "relation-note"}>
-      <legend className="sr-only">어떤 관계인가요?</legend>
+      <legend className="sr-only">{legend}</legend>
       <div className="grid grid-cols-4 gap-1.5 md:flex md:flex-wrap md:gap-2">
-        {RELATION_OPTIONS.map((option) => {
+        {options.map((option) => {
           const checked = value === option.value;
           return (
             <label
@@ -43,7 +46,7 @@ export function RelationPicker({ value, error, onChange }: RelationPickerProps) 
         </p>
       ) : (
         <p id="relation-note" className="sr-only">
-          관계는 점수에 영향을 주지 않고, 리포트의 말투에만 반영돼요.
+          {note}
         </p>
       )}
     </fieldset>

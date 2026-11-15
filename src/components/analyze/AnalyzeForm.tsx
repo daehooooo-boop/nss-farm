@@ -7,17 +7,19 @@ import { Button } from "@/components/ui/Button";
 import { NameField } from "@/components/analyze/NameField";
 import { RelationPicker } from "@/components/analyze/RelationPicker";
 import { AnalyzingScreen } from "@/components/analyze/AnalyzingScreen";
-import { analyzeNames } from "@/lib/analysis";
-import { personLabels } from "@/data/relations";
-import { validateInput } from "@/lib/analysis/validate";
 import { saveInput } from "@/lib/storage/session";
+import { ENGINES } from "@/i18n/engine";
+import { getDict } from "@/i18n/dict";
+import { localePath, type Locale } from "@/i18n/locale";
 import type { DraftInput, PersonFieldErrors, PersonInput, PersonKey, Relation } from "@/lib/analysis/types";
 
 const EMPTY_PERSON: PersonInput = { name: "", hanja: "", meaning: "" };
 
 type Touched = Record<PersonKey, Partial<Record<keyof PersonInput, boolean>>>;
 
-export function AnalyzeForm() {
+export function AnalyzeForm({ locale = "ko" }: { locale?: Locale }) {
+  const t = getDict(locale).form;
+  const engine = ENGINES[locale];
   const router = useRouter();
   const formRef = useRef<HTMLFormElement>(null);
   const [draft, setDraft] = useState<DraftInput>({ a: EMPTY_PERSON, b: EMPTY_PERSON, relation: "friend" });
@@ -25,10 +27,10 @@ export function AnalyzeForm() {
   const [submitted, setSubmitted] = useState(false);
   const [storageError, setStorageError] = useState(false);
   const [steps, setSteps] = useState<string[] | null>(null);
-  const goToResult = useCallback(() => router.push("/result"), [router]);
+  const goToResult = useCallback(() => router.push(localePath(locale, "/result")), [router, locale]);
 
-  const result = useMemo(() => validateInput(draft), [draft]);
-  const labels = personLabels(draft.relation);
+  const result = useMemo(() => engine.validate(draft), [engine, draft]);
+  const labels = engine.personLabels(draft.relation);
 
   /** 오류는 필드를 떠났거나 제출을 시도한 뒤에만 보여준다 (PRD 4.2) */
   function visibleErrors(key: PersonKey): PersonFieldErrors {
@@ -65,22 +67,16 @@ export function AnalyzeForm() {
       });
       return;
     }
-    if (!saveInput(result.value)) {
+    if (!saveInput(result.value, locale)) {
       setStorageError(true);
       return;
     }
-    // 엔진은 즉시 계산된다. 진행 화면은 실제 단계(분해 → 발음 → 의미 → 리포트)를 짧게 보여줄 뿐이다.
-    const analysis = analyzeNames(result.value);
+    // 엔진은 결과 화면에서 즉시 계산된다. 진행 화면은 실제 단계(분해 → 발음 → 리포트)를 짧게 보여줄 뿐이다.
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       goToResult();
       return;
     }
-    setSteps([
-      "두 사람의 이름을 살펴보고 있습니다.",
-      "이름의 울림을 비교하고 있습니다.",
-      ...(analysis.sections.meaning.status === "available" ? ["이름에 담긴 의미를 연결하고 있습니다."] : []),
-      "두 사람만의 조화로운 이야기를 만들고 있습니다.",
-    ]);
+    setSteps([...t.steps]);
   }
 
   const relationError = submitted && !result.ok ? result.errors.relation : undefined;
@@ -93,7 +89,8 @@ export function AnalyzeForm() {
           personKey="a"
           label={labels.a}
           value={draft.a.name}
-          placeholder="예: 김하윤"
+          placeholder={t.placeholderA}
+          nameLabel={t.nameLabel}
           error={errors.a.name}
           onChange={(v) => update("a", "name", v)}
           onBlur={() => blur("a", "name")}
@@ -102,7 +99,8 @@ export function AnalyzeForm() {
           personKey="b"
           label={labels.b}
           value={draft.b.name}
-          placeholder={draft.relation === "pet" ? "예: 콩" : "예: 이도현"}
+          placeholder={draft.relation === "pet" ? t.placeholderPet : t.placeholderB}
+          nameLabel={t.nameLabel}
           error={errors.b.name}
           onChange={(v) => update("b", "name", v)}
           onBlur={() => blur("b", "name")}
@@ -110,7 +108,14 @@ export function AnalyzeForm() {
       </div>
 
 
-      <RelationPicker value={draft.relation} error={relationError} onChange={selectRelation} />
+      <RelationPicker
+        value={draft.relation}
+        error={relationError}
+        onChange={selectRelation}
+        options={engine.relationOptions}
+        legend={t.relationLegend}
+        note={t.relationNote}
+      />
 
       <div className="pt-0.5 md:flex md:items-center md:justify-between md:gap-6 md:pt-2">
         <Button
@@ -120,19 +125,19 @@ export function AnalyzeForm() {
           className={`w-full md:order-2 md:w-auto md:min-w-[220px] ${result.ok ? "" : "opacity-40"}`}
           icon={<ArrowRight size={20} strokeWidth={1.75} aria-hidden />}
         >
-          분석하기
+          {t.submit}
         </Button>
         <p className="mt-2 flex items-center justify-center gap-1.5 text-[12px] text-ink-faint md:order-1 md:mt-0 md:text-[13px]">
           <Lock size={13} strokeWidth={1.75} aria-hidden />
-          이름은 저장되지 않고 이 브라우저 안에서만 분석돼요
+          {t.lockNote}
         </p>
       </div>
       {storageError ? (
         <p role="alert" className="text-[13px] text-danger">
-          이 브라우저에서 임시 저장을 사용할 수 없어 결과를 열 수 없어요. 개인정보 보호 모드를 끄고 다시 시도해 주세요.
+          {t.storageError}
         </p>
       ) : null}
-      {steps ? <AnalyzingScreen steps={steps} onDone={goToResult} /> : null}
+      {steps ? <AnalyzingScreen steps={steps} onDone={goToResult} ariaLabel={t.analyzingAria} /> : null}
     </form>
   );
 }

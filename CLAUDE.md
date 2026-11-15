@@ -6,7 +6,7 @@
 > 두 사람의 이름을 규칙 기반으로 비교해 이름 조화 지수와 관계 리포트를 보여주는 웹 서비스.
 
 이 문서는 이 저장소에서 작업하는 모든 사람(과 Claude)이 지켜야 할 규칙이다.
-제품 요구사항은 `docs/PRD.md`, 디자인은 `docs/DESIGN_GUIDE.md`, 분석/점수 규칙은 `docs/ANALYSIS_RULES.md`, 단계별 계획은 `docs/IMPLEMENTATION_PLAN.md`를 따른다.
+제품 요구사항은 `docs/PRD.md`, 디자인은 `docs/DESIGN_GUIDE.md`, 분석/점수 규칙은 `docs/ANALYSIS_RULES.md`(영어는 `docs/ANALYSIS_RULES_EN.md`), 단계별 계획은 `docs/IMPLEMENTATION_PLAN.md`를 따른다.
 
 ## 1. 기술 스택
 
@@ -31,7 +31,8 @@ npm test         # vitest 단위 테스트
 
 ```
 src/
-  app/                 # 라우트: / , /analyze , /result  + layout, metadata, robots, sitemap
+  app/                 # 라우트 그룹 (ko): / , /analyze , /result · (en): /en/... + metadata, robots, sitemap
+  i18n/                # 언어 정의, UI 문구 사전(dict.ts), 언어별 엔진 묶음(engine.ts)
   components/
     ui/                # 버튼, 카드, 입력 필드 등 브랜드 기본 컴포넌트
     layout/            # Header, Footer
@@ -39,6 +40,7 @@ src/
   lib/
     hangul/            # 한글 자모 분해 등 순수 유틸
     analysis/          # 분석 엔진 (발음·구조·의미·종합 점수·유형 분류) — UI 의존 금지
+    analysis-en/       # 영어 이름 분석 (철자 기반 음절, 같은 점수식) — docs/ANALYSIS_RULES_EN.md
     report/            # 분석 결과 → 문장 리포트 조합
     storage/           # sessionStorage 결과 보관
   data/                # 의미 키워드 사전, 관계 유형 정의, 문장 템플릿 등 정적 데이터
@@ -50,6 +52,7 @@ docs/                  # PRD, 디자인 가이드, 분석 규칙, 구현 계획
 - `any` 금지. 불가피하면 `unknown` + 타입 가드.
 - 분석 로직(`lib/analysis`, `lib/report`)은 React·브라우저 API를 import하지 않는 순수 함수로 작성한다.
 - 데이터(`data/`)와 로직(`lib/`)과 UI(`components/`)를 분리한다. 문장·키워드·가중치를 컴포넌트 안에 하드코딩하지 않는다.
+- 화면 문구는 `src/i18n/dict.ts`에 한국어·영어를 함께 추가한다. 컴포넌트는 `locale` prop으로 문구를 고른다.
 - 가중치·임계값은 `lib/analysis/constants.ts` 한 곳에서 관리하고, 바꾸면 `docs/ANALYSIS_RULES.md`도 같은 커밋에서 고친다.
 - 분석은 결정적이어야 한다. `Math.random()`, `Date.now()` 등을 결과 계산에 쓰지 않는다.
 - 클라이언트 컴포넌트(`"use client"`)는 상호작용이 필요한 곳에만 둔다.

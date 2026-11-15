@@ -1,12 +1,7 @@
 import type { FlowJunction, NameFeatures } from "@/lib/analysis/types";
+import type { Dict } from "@/i18n/dict";
 
-const KIND_LABEL: Record<FlowJunction["kind"], string> = {
-  open: "열린 연결",
-  liaison: "연음",
-  sonorant: "울림 연결",
-  plain: "짧은 쉼표",
-  hard: "또렷한 끊김",
-};
+type FlowText = Dict["flow"];
 
 function NameSyllables({
   f,
@@ -23,7 +18,7 @@ function NameSyllables({
       {f.syllables.map((s, i) => {
         const on = highlight === "last" ? i === f.length - 1 : i === 0;
         return (
-          <span key={i} className={on ? `${color}` : "text-ink/30"}>
+          <span key={i} className={on ? `${color}` : "text-ink/50"}>
             {s.char}
           </span>
         );
@@ -32,7 +27,7 @@ function NameSyllables({
   );
 }
 
-function Row({ j, from, to, fromTone }: { j: FlowJunction; from: NameFeatures; to: NameFeatures; fromTone: "a" | "b" }) {
+function Row({ j, from, to, fromTone, t }: { j: FlowJunction; from: NameFeatures; to: NameFeatures; fromTone: "a" | "b"; t: FlowText }) {
   const toTone = fromTone === "a" ? "b" : "a";
   // 연결 강도에 따라 이음선 스타일
   const line = j.value >= 0.85 ? "border-solid" : j.value >= 0.6 ? "border-dashed" : "border-dotted";
@@ -44,10 +39,8 @@ function Row({ j, from, to, fromTone }: { j: FlowJunction; from: NameFeatures; t
         <NameSyllables f={to} highlight="first" tone={toTone} />
       </div>
       <p className="mt-3 flex flex-wrap items-center gap-2 text-[14px] text-ink-soft">
-        <span className="rounded-full bg-ink px-2.5 py-0.5 text-[12px] font-semibold text-paper">{KIND_LABEL[j.kind]}</span>
-        <span>
-          ‘{j.fromSyllable}’의 {j.jong ? `받침 ${j.jong}` : "열린 끝소리"} → ‘{j.toSyllable}’의 첫소리 {j.cho === "ㅇ" ? "ㅇ(소리 없음)" : j.cho}
-        </span>
+        <span className="rounded-full bg-ink px-2.5 py-0.5 text-[12px] font-semibold text-paper">{t.kind[j.kind]}</span>
+        <span>{t.junction(j.fromSyllable, j.jong, j.toSyllable, j.cho)}</span>
       </p>
       <p className="mt-1 text-[14px] text-ink-faint">{j.detail}</p>
     </li>
@@ -60,23 +53,25 @@ export function FlowVisual({
   b,
   junctions,
   sharedSounds,
+  t,
 }: {
   a: NameFeatures;
   b: NameFeatures;
   junctions: [FlowJunction, FlowJunction];
   sharedSounds: string[];
+  t: FlowText;
 }) {
   return (
     <div className="rounded-[var(--radius-card)] border border-line bg-surface p-5 md:p-7">
-      <p className="eyebrow text-ink-soft">이어 부르기</p>
+      <p className="eyebrow text-ink-soft">{t.title}</p>
       <ul className="divide-y divide-line">
-        <Row j={junctions[0]} from={a} to={b} fromTone="a" />
-        <Row j={junctions[1]} from={b} to={a} fromTone="b" />
+        <Row j={junctions[0]} from={a} to={b} fromTone="a" t={t} />
+        <Row j={junctions[1]} from={b} to={a} fromTone="b" t={t} />
       </ul>
       <div className="mt-2 border-t border-line pt-5">
-        <p className="eyebrow text-ink-soft">함께 가진 소리</p>
+        <p className="eyebrow text-ink-soft">{t.shared}</p>
         {sharedSounds.length > 0 ? (
-          <ul className="mt-3 flex flex-wrap gap-2" aria-label="두 이름이 함께 가진 소리">
+          <ul className="mt-3 flex flex-wrap gap-2" aria-label={t.sharedAria}>
             {sharedSounds.map((s) => (
               <li
                 key={s}
@@ -87,7 +82,7 @@ export function FlowVisual({
             ))}
           </ul>
         ) : (
-          <p className="mt-3 text-[14px] text-ink-faint">겹치는 소리가 없어요. 서로에게 새로운 소리를 들려주는 조합이에요.</p>
+          <p className="mt-3 text-[14px] text-ink-faint">{t.noShared}</p>
         )}
       </div>
     </div>

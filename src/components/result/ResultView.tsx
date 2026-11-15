@@ -2,11 +2,10 @@
 
 import { useMemo, useSyncExternalStore } from "react";
 import { ArrowRight, RotateCcw } from "lucide-react";
-import { analyzeNames } from "@/lib/analysis";
-import { buildReport } from "@/lib/report/buildReport";
 import { parseInput, readRawInput } from "@/lib/storage/session";
-import { RELATION_TYPES } from "@/data/relationTypes";
-import { relationOption } from "@/data/relations";
+import { ENGINES } from "@/i18n/engine";
+import { getDict } from "@/i18n/dict";
+import { localePath, type Locale } from "@/i18n/locale";
 import { ButtonLink } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { ScoreRing } from "@/components/result/ScoreRing";
@@ -17,26 +16,39 @@ import { ShareActions } from "@/components/share/ShareActions";
 
 const noopSubscribe = () => () => {};
 
-export function ResultView() {
+const readKo = () => readRawInput("ko");
+const readEn = () => readRawInput("en");
+
+export function ResultView({ locale = "ko" }: { locale?: Locale }) {
+  const engine = ENGINES[locale];
+  const dict = getDict(locale);
+  const t = dict.result;
   // 서버 렌더에서는 undefined(확인 중), 브라우저에서는 저장된 문자열 또는 null
-  const raw = useSyncExternalStore<string | null | undefined>(noopSubscribe, readRawInput, () => undefined);
+  const raw = useSyncExternalStore<string | null | undefined>(
+    noopSubscribe,
+    locale === "en" ? readEn : readKo,
+    () => undefined,
+  );
   const data = useMemo(() => {
     const input = parseInput(raw ?? null);
     if (!input) return null;
-    const result = analyzeNames(input);
-    return { result, report: buildReport(result) };
-  }, [raw]);
+    // 다른 언어로 저장된 입력이 섞여 들어와도 이 언어의 검증을 통과해야만 분석한다
+    const checked = engine.validate(input);
+    if (!checked.ok) return null;
+    const result = engine.analyze(checked.value);
+    return { result, report: engine.report(result) };
+  }, [raw, engine]);
 
   if (raw === undefined) {
     return <div className="min-h-[60vh]" aria-busy="true" />;
   }
-  if (!data) return <EmptyState />;
+  if (!data) return <EmptyState locale={locale} />;
 
   const { result, report } = data;
   const { a, b } = result.features;
   const { phonetic, structure, meaning } = result.sections;
-  const type = RELATION_TYPES[result.type.code];
-  const relation = relationOption(result.input.relation);
+  const type = engine.relationTypes[result.type.code];
+  const relation = engine.relationOption(result.input.relation);
   const weights = result.weights;
   // 이름의 뜻 입력은 2026-11-15 화면에서 뺐다. 뜻 자료가 있을 때만 의미 항목을 보여 준다.
   const hasMeaning = meaning.status === "available";
@@ -47,7 +59,7 @@ export function ResultView() {
       <header className="bg-night text-paper">
         <Container className="pt-10 pb-16 md:pt-16 md:pb-24">
           <div className="flex items-center justify-between">
-            <p className="eyebrow text-paper/60">이름 궁합 리포트</p>
+            <p className="eyebrow text-paper/60">{t.eyebrow}</p>
             <p className="rounded-full border border-paper/25 px-3 py-1 text-[12px] text-paper/80">{relation.label}</p>
           </div>
           <h1 className="mt-10 font-serif-kr text-[36px] leading-[1.2] font-bold md:text-[64px]">
@@ -60,29 +72,29 @@ export function ResultView() {
           </p>
 
           <div className="mt-12 grid items-center gap-10 md:grid-cols-2">
-            <div className="flex justify-center md:justify-start" role="img" aria-label={`이름 조화 지수 ${result.total}점, ${result.grade}`}>
+            <div className="flex justify-center md:justify-start" role="img" aria-label={t.indexAria(result.total, result.grade)}>
               <ScoreRing score={result.total} />
             </div>
             <div>
-              <p className="text-[13px] text-paper/60">이름 조화 지수</p>
+              <p className="text-[13px] text-paper/60">{t.index}</p>
               <p className="mt-1 font-serif-kr text-[28px] font-bold">{result.grade}</p>
               <dl className={`mt-6 grid gap-3 border-t border-paper/15 pt-5 ${hasMeaning ? "grid-cols-3" : "grid-cols-2"}`}>
                 {[
-                  { label: "발음", score: phonetic.score, w: weights.phonetic },
-                  { label: "구조", score: structure.score, w: weights.structure },
-                  ...(hasMeaning ? [{ label: "의미", score: meaning.score, w: weights.meaning }] : []),
+                  { label: t.sound, score: phonetic.score, w: weights.phonetic },
+                  { label: t.structure, score: structure.score, w: weights.structure },
+                  ...(hasMeaning ? [{ label: t.meaning, score: meaning.score, w: weights.meaning }] : []),
                 ].map((s) => (
                   <div key={s.label}>
                     <dt className="text-[12px] text-paper/60">{s.label}</dt>
                     <dd className="mt-1 font-display text-[30px] leading-none tabular-nums">
-                      {s.score === null ? <span className="font-sans text-[14px] text-paper/60">자료 부족</span> : Math.round(s.score)}
+                      {s.score === null ? <span className="font-sans text-[14px] text-paper/60">{t.noData}</span> : Math.round(s.score)}
                     </dd>
-                    <dd className="mt-1 text-[11px] text-paper/60">{s.w ? `반영 ${Math.round(s.w * 100)}%` : "제외"}</dd>
+                    <dd className="mt-1 text-[11px] text-paper/60">{s.w ? t.weight(Math.round(s.w * 100)) : ""}</dd>
                   </div>
                 ))}
               </dl>
               <p className="mt-5 text-[12px] leading-[1.6] text-paper/60">
-                이름 조화 지수는 이름의 특징을 비교한 엔터테인먼트 지표이며, 과학적 궁합 점수가 아니에요.
+                {t.disclaimer}
               </p>
             </div>
           </div>
@@ -91,7 +103,7 @@ export function ResultView() {
 
       <Container size="read" className="space-y-16 py-16 md:space-y-24 md:py-24">
         {/* 요약 */}
-        <section aria-label="전체 요약">
+        <section aria-label={t.summaryAria}>
           <p className="eyebrow text-ink-soft">Summary</p>
           <div className="mt-4 space-y-3 text-[17px] leading-[1.75] md:text-[19px]">
             {report.summary.map((s) => (
@@ -105,21 +117,21 @@ export function ResultView() {
         </section>
 
         {/* 01 발음 */}
-        <SectionBlock index="01" label="Sound" title="발음의 조화" score={phonetic.score} weight={weights.phonetic}>
+        <SectionBlock index="01" label="Sound" title={t.soundTitle} score={phonetic.score} weight={weights.phonetic} noDataLabel={t.noData} weightLabel={t.weight}>
           <p className="mb-6 text-[17px] leading-[1.75]">{report.image}</p>
-          <FlowVisual a={a} b={b} junctions={phonetic.flow.junctions} sharedSounds={phonetic.sharedSounds} />
+          <FlowVisual a={a} b={b} junctions={phonetic.flow.junctions} sharedSounds={phonetic.sharedSounds} t={dict.flow} />
           <ul className="mt-8">
             {phonetic.items.map((item) => (
-              <ScoreItemRow key={item.code} item={item} />
+              <ScoreItemRow key={item.code} item={item} ariaLabel={t.scoreAria(item.label)} />
             ))}
           </ul>
         </SectionBlock>
 
         {/* 02 구조 */}
-        <SectionBlock index="02" label="Structure" title="구조의 균형" score={structure.score} weight={weights.structure}>
+        <SectionBlock index="02" label="Structure" title={t.structureTitle} score={structure.score} weight={weights.structure} noDataLabel={t.noData} weightLabel={t.weight}>
           <ul>
             {structure.items.map((item) => (
-              <ScoreItemRow key={item.code} item={item} />
+              <ScoreItemRow key={item.code} item={item} ariaLabel={t.scoreAria(item.label)} />
             ))}
           </ul>
         </SectionBlock>
@@ -129,32 +141,34 @@ export function ResultView() {
         <SectionBlock
           index="03"
           label="Meaning"
-          title="의미의 조화"
+          title={t.meaningTitle}
           score={meaning.score}
           weight={weights.meaning}
+          noDataLabel={t.noData}
+          weightLabel={t.weight}
         >
             <dl className="mb-6 grid gap-3 sm:grid-cols-2">
               <div className="rounded-[var(--radius-field)] bg-person-a-tint p-4">
-                <dt className="text-[13px] font-semibold text-person-a">{a.name}의 뜻</dt>
+                <dt className="text-[13px] font-semibold text-person-a">{t.meaningOf(a.name)}</dt>
                 <dd className="mt-1 text-[15px]">“{result.input.a.meaning}”</dd>
                 <dd className="mt-2 text-[13px] text-ink-soft">{meaning.categories.a.join(" · ")}</dd>
               </div>
               <div className="rounded-[var(--radius-field)] bg-person-b-tint p-4">
-                <dt className="text-[13px] font-semibold text-person-b">{b.name}의 뜻</dt>
+                <dt className="text-[13px] font-semibold text-person-b">{t.meaningOf(b.name)}</dt>
                 <dd className="mt-1 text-[15px]">“{result.input.b.meaning}”</dd>
                 <dd className="mt-2 text-[13px] text-ink-soft">{meaning.categories.b.join(" · ")}</dd>
               </div>
             </dl>
             <ul>
               {meaning.items.map((item) => (
-                <ScoreItemRow key={item.code} item={item} />
+                <ScoreItemRow key={item.code} item={item} ariaLabel={t.scoreAria(item.label)} />
               ))}
             </ul>
         </SectionBlock>
         ) : null}
 
         {/* 04 관계 유형 */}
-        <SectionBlock index={hasMeaning ? "04" : "03"} label="Type" title="두 이름의 관계 유형">
+        <SectionBlock index={hasMeaning ? "04" : "03"} label="Type" title={t.typeTitle}>
           <div className="rounded-[var(--radius-card)] bg-night p-7 text-paper md:p-9">
             <p className="font-display text-[44px] leading-none md:text-[56px]">
               {type.label.replace(" TYPE", "")}
@@ -166,18 +180,18 @@ export function ResultView() {
           </div>
           <div className="mt-8 space-y-6 text-[17px] leading-[1.75]">
             <div>
-              <h4 className="eyebrow text-ink-soft">관계의 강점</h4>
+              <h4 className="eyebrow text-ink-soft">{t.strength}</h4>
               <p className="mt-2">{report.strength}</p>
             </div>
             <div>
-              <h4 className="eyebrow text-ink-soft">서로를 이해하는 한마디</h4>
+              <h4 className="eyebrow text-ink-soft">{t.message}</h4>
               <p className="mt-2">{report.message}</p>
             </div>
           </div>
         </SectionBlock>
 
         {/* 05 스토리 */}
-        <SectionBlock index={hasMeaning ? "05" : "04"} label="Story" title="두 이름으로 쓴 이야기">
+        <SectionBlock index={hasMeaning ? "05" : "04"} label="Story" title={t.storyTitle}>
           <blockquote className="border-l-2 border-ink pl-5 font-serif-kr text-[19px] leading-[1.85] md:text-[22px]">
             {report.story.map((p) => (
               <p key={p} className="mt-4 first:mt-0">
@@ -188,15 +202,15 @@ export function ResultView() {
         </SectionBlock>
 
         {/* 공유 */}
-        <section aria-label="결과 공유" className="border-t border-ink pt-8">
-          <ShareActions result={result} report={report} />
+        <section aria-label={t.shareAria} className="border-t border-ink pt-8">
+          <ShareActions result={result} report={report} locale={locale} />
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <ButtonLink href="/analyze" variant="secondary" icon={<RotateCcw size={18} strokeWidth={1.75} aria-hidden />}>
-              다른 이름으로 분석하기
+            <ButtonLink href={localePath(locale, "/analyze")} variant="secondary" icon={<RotateCcw size={18} strokeWidth={1.75} aria-hidden />}>
+              {t.again}
             </ButtonLink>
           </div>
           <p className="mt-8 text-[13px] leading-[1.6] text-ink-faint">
-            이 결과는 이 브라우저 탭에만 임시로 보관되며, 탭을 닫으면 사라져요. 결과는 재미와 공감을 위한 콘텐츠예요.
+            {t.tabNote}
           </p>
         </section>
       </Container>
@@ -204,16 +218,17 @@ export function ResultView() {
   );
 }
 
-function EmptyState() {
+function EmptyState({ locale }: { locale: Locale }) {
+  const t = getDict(locale).result;
   return (
     <Container size="read" className="flex min-h-[60vh] flex-col items-start justify-center py-24">
       <p className="eyebrow text-ink-soft">No Report</p>
-      <h1 className="mt-4 font-serif-kr text-[28px] leading-[1.3] font-bold md:text-[36px]">아직 분석한 이름이 없어요</h1>
+      <h1 className="mt-4 font-serif-kr text-[28px] leading-[1.3] font-bold md:text-[36px]">{t.emptyTitle}</h1>
       <p className="mt-4 text-[15px] leading-[1.65] text-ink-soft">
-        결과는 개인정보 보호를 위해 이 탭에만 잠시 보관돼요. 탭을 새로 열었거나 시간이 지나 사라졌다면, 이름을 다시 입력해 주세요.
+        {t.emptyBody}
       </p>
-      <ButtonLink href="/analyze" className="mt-8" icon={<ArrowRight size={20} strokeWidth={1.75} aria-hidden />}>
-        이름 입력하러 가기
+      <ButtonLink href={localePath(locale, "/analyze")} className="mt-8" icon={<ArrowRight size={20} strokeWidth={1.75} aria-hidden />}>
+        {t.emptyCta}
       </ButtonLink>
     </Container>
   );

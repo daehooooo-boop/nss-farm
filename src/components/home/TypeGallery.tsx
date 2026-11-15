@@ -1,8 +1,13 @@
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { RELATION_TYPES, RELATION_TYPE_ORDER } from "@/data/relationTypes";
+import { RELATION_TYPE_ORDER } from "@/data/relationTypes";
+import { ENGINES } from "@/i18n/engine";
+import { getDict } from "@/i18n/dict";
+import type { Locale } from "@/i18n/locale";
 
-export function TypeGallery() {
+export function TypeGallery({ locale = "ko" }: { locale?: Locale }) {
+  const t = getDict(locale).types;
+  const types = ENGINES[locale].relationTypes;
   return (
     <section aria-labelledby="types-title" className="py-20 md:py-28 lg:py-32">
       <Container>
@@ -10,12 +15,12 @@ export function TypeGallery() {
           id="types-title"
           index="04"
           label="Types"
-          title="두 이름이 만드는 다섯 가지 관계"
-          description="관계 유형은 무작위가 아니라 두 이름의 실제 분석 수치로 정해져요."
+          title={t.title}
+          description={t.description}
         />
         <ul className="mt-12 border-t border-ink">
           {RELATION_TYPE_ORDER.map((code) => {
-            const type = RELATION_TYPES[code];
+            const type = types[code];
             return (
               <li
                 key={code}

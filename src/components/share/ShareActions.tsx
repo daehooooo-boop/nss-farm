@@ -3,14 +3,14 @@
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { Copy, Download, Loader2, Share2 } from "lucide-react";
 import { Button } from "@/components/ui/Button";
-import { RELATION_TYPES } from "@/data/relationTypes";
-import { relationOption } from "@/data/relations";
+import { ENGINES } from "@/i18n/engine";
+import { getDict } from "@/i18n/dict";
+import type { Locale } from "@/i18n/locale";
 import { canvasToBlob, drawShareCard, type ShareCardData } from "@/lib/share/drawShareCard";
 import type { AnalysisResult } from "@/lib/analysis/types";
 import type { Report } from "@/lib/report/buildReport";
 import { SITE } from "@/lib/site";
 
-const FILE_NAME = "name-synergy-result.png";
 const noopSubscribe = () => () => {};
 const canShareSnapshot = () => typeof navigator !== "undefined" && typeof navigator.share === "function";
 
@@ -33,7 +33,10 @@ async function copyText(text: string): Promise<boolean> {
   }
 }
 
-export function ShareActions({ result, report }: { result: AnalysisResult; report: Report }) {
+export function ShareActions({ result, report, locale = "ko" }: { result: AnalysisResult; report: Report; locale?: Locale }) {
+  const engine = ENGINES[locale];
+  const t = getDict(locale).share;
+  const FILE_NAME = t.fileName;
   const canShare = useSyncExternalStore(noopSubscribe, canShareSnapshot, () => false);
   const [busy, setBusy] = useState<"save" | "share" | null>(null);
   const [toast, setToast] = useState<string | null>(null);
@@ -52,17 +55,18 @@ export function ShareActions({ result, report }: { result: AnalysisResult; repor
   const card: ShareCardData = {
     nameA: result.features.a.name,
     nameB: result.features.b.name,
-    relationLabel: relationOption(result.input.relation).label,
+    relationLabel: engine.relationOption(result.input.relation).label,
     total: result.total,
     grade: result.grade,
     typeCode: result.type.code,
-    typeTitle: RELATION_TYPES[result.type.code].title,
+    typeTitle: engine.relationTypes[result.type.code].title,
     message: report.headline,
-    siteHost: new URL(SITE.url).host,
+    siteHost: new URL(SITE.url).host + (locale === "en" ? "/en" : ""),
+    locale,
   };
 
   async function makeImage(): Promise<Blob> {
-    return canvasToBlob(await drawShareCard(card));
+    return canvasToBlob(await drawShareCard(card), locale);
   }
 
   async function handleSave() {
@@ -77,16 +81,16 @@ export function ShareActions({ result, report }: { result: AnalysisResult; repor
       link.click();
       link.remove();
       setTimeout(() => URL.revokeObjectURL(url), 1000);
-      notify("결과 이미지를 저장했어요.");
+      notify(t.saved);
     } catch {
-      notify("이미지를 만들지 못했어요. 잠시 후 다시 시도해 주세요.");
+      notify(t.saveFail);
     } finally {
       setBusy(null);
     }
   }
 
   async function handleCopy() {
-    notify((await copyText(report.shareText)) ? "결과 문구를 복사했어요." : "복사하지 못했어요. 직접 선택해 복사해 주세요.");
+    notify((await copyText(report.shareText)) ? t.copied : t.copyFail);
   }
 
   async function handleShare() {
@@ -102,7 +106,7 @@ export function ShareActions({ result, report }: { result: AnalysisResult; repor
     } catch (error) {
       // 사용자가 공유 창을 닫은 경우는 조용히 넘어간다
       if (!(error instanceof DOMException && error.name === "AbortError")) {
-        notify("공유하지 못했어요. 이미지 저장이나 문구 복사를 이용해 주세요.");
+        notify(t.shareFail);
       }
     } finally {
       setBusy(null);
@@ -112,9 +116,9 @@ export function ShareActions({ result, report }: { result: AnalysisResult; repor
   return (
     <div>
       <p className="eyebrow text-ink-soft">Share</p>
-      <h3 className="mt-3 font-serif-kr text-[24px] leading-[1.3] font-medium md:text-[30px]">결과를 간직하고 나눠 보세요</h3>
+      <h3 className="mt-3 font-serif-kr text-[24px] leading-[1.3] font-medium md:text-[30px]">{t.title}</h3>
       <p className="mt-2 text-[14px] leading-[1.6] text-ink-faint">
-        이미지와 문구는 이 기기에서만 만들어져요. 이름이 담긴 링크나 서버 기록은 남지 않아요.
+        {t.body}
       </p>
       <div className="mt-6 grid gap-3 sm:grid-cols-3">
         <Button
@@ -122,10 +126,10 @@ export function ShareActions({ result, report }: { result: AnalysisResult; repor
           disabled={busy !== null}
           icon={busy === "save" ? <Loader2 size={18} className="animate-spin" aria-hidden /> : <Download size={18} strokeWidth={1.75} aria-hidden />}
         >
-          이미지 저장
+          {t.save}
         </Button>
         <Button variant="secondary" onClick={handleCopy} icon={<Copy size={18} strokeWidth={1.75} aria-hidden />}>
-          문구 복사
+          {t.copy}
         </Button>
         {canShare ? (
           <Button
@@ -134,7 +138,7 @@ export function ShareActions({ result, report }: { result: AnalysisResult; repor
             disabled={busy !== null}
             icon={busy === "share" ? <Loader2 size={18} className="animate-spin" aria-hidden /> : <Share2 size={18} strokeWidth={1.75} aria-hidden />}
           >
-            공유하기
+            {t.share}
           </Button>
         ) : null}
       </div>

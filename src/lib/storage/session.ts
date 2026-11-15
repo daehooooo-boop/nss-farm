@@ -4,8 +4,10 @@
  */
 import { isRelation } from "@/lib/analysis/validate";
 import type { AnalysisInput, PersonInput } from "@/lib/analysis/types";
+import type { Locale } from "@/i18n/locale";
 
-const INPUT_KEY = "name-synergy:input:v1";
+/** 언어마다 따로 보관한다 (한국어 입력이 영어 엔진으로 가지 않도록) */
+const INPUT_KEY: Record<Locale, string> = { ko: "name-synergy:input:v1", en: "name-synergy:input:en:v1" };
 
 function isPerson(value: unknown): value is PersonInput {
   if (typeof value !== "object" || value === null) return false;
@@ -19,31 +21,31 @@ function isAnalysisInput(value: unknown): value is AnalysisInput {
   return isPerson(v.a) && isPerson(v.b) && isRelation(v.relation);
 }
 
-export function saveInput(input: AnalysisInput): boolean {
+export function saveInput(input: AnalysisInput, locale: Locale = "ko"): boolean {
   try {
-    window.sessionStorage.setItem(INPUT_KEY, JSON.stringify(input));
+    window.sessionStorage.setItem(INPUT_KEY[locale], JSON.stringify(input));
     return true;
   } catch {
     return false;
   }
 }
 
-export function loadInput(): AnalysisInput | null {
-  return parseInput(readRawInput());
+export function loadInput(locale: Locale = "ko"): AnalysisInput | null {
+  return parseInput(readRawInput(locale));
 }
 
-export function clearInput(): void {
+export function clearInput(locale: Locale = "ko"): void {
   try {
-    window.sessionStorage.removeItem(INPUT_KEY);
+    window.sessionStorage.removeItem(INPUT_KEY[locale]);
   } catch {
     // 무시
   }
 }
 
 /** useSyncExternalStore용: 저장된 원문 문자열 (안정적인 스냅샷) */
-export function readRawInput(): string | null {
+export function readRawInput(locale: Locale = "ko"): string | null {
   try {
-    return window.sessionStorage.getItem(INPUT_KEY);
+    return window.sessionStorage.getItem(INPUT_KEY[locale]);
   } catch {
     return null;
   }
