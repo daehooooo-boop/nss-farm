@@ -69,6 +69,11 @@ const ko = {
       "입력한 이름은 서버에 저장되지 않고, 이 브라우저 안에서만 분석돼요.",
     ],
     copyright: "© 이름 궁합",
+    creditBy: "Creative by",
+    promoEyebrow: "More from Rey.K",
+    promoTitle: "레이.케이가 만든 다른 실험도 구경해 보세요",
+    promoCta: "rey-farm 방문하기",
+    newTab: "(새 창에서 열림)",
   },
   result: {
     metaTitle: "이름 조화 리포트",
@@ -199,6 +204,11 @@ const en: Dict = {
       "Names you enter are never stored on a server. Everything runs in this browser.",
     ],
     copyright: "© Name Synergy",
+    creditBy: "Creative by",
+    promoEyebrow: "More from Rey.K",
+    promoTitle: "Explore more experiments made by Rey.K",
+    promoCta: "Visit rey-farm",
+    newTab: "(opens in a new tab)",
   },
   result: {
     metaTitle: "Name harmony report",
