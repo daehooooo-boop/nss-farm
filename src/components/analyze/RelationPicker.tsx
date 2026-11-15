@@ -13,8 +13,8 @@ type RelationPickerProps = {
 export function RelationPicker({ value, error, onChange }: RelationPickerProps) {
   return (
     <fieldset aria-describedby={error ? "relation-error" : "relation-note"}>
-      <legend className="text-[13px] font-semibold text-ink">어떤 관계인가요?</legend>
-      <div className="mt-1 grid grid-cols-4 gap-1.5 md:flex md:flex-wrap md:gap-2">
+      <legend className="sr-only">어떤 관계인가요?</legend>
+      <div className="grid grid-cols-4 gap-1.5 md:flex md:flex-wrap md:gap-2">
         {RELATION_OPTIONS.map((option) => {
           const checked = value === option.value;
           return (

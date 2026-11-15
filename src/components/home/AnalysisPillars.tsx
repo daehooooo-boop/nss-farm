@@ -39,7 +39,7 @@ export function AnalysisPillars() {
           ))}
         </ul>
         <p className="mt-6 text-[13px] leading-[1.6] text-ink-faint">
-          이름의 뜻을 입력하지 않으면 의미 항목은 빼고, 발음 57% · 구조 43%로 다시 나눠 계산해요. 입력하지 않은 한자의 뜻을 지어내지 않아요.
+          이름의 뜻을 입력하지 않으면 의미 항목은 빼고, 발음 57% · 구조 43%로 다시 나눠 계산해요. 입력하지 않은 뜻을 지어내지 않아요.
         </p>
       </Container>
     </section>

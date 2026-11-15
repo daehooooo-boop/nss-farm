@@ -21,7 +21,7 @@ type Touched = Record<PersonKey, Partial<Record<keyof PersonInput, boolean>>>;
 export function AnalyzeForm() {
   const router = useRouter();
   const formRef = useRef<HTMLFormElement>(null);
-  const [draft, setDraft] = useState<DraftInput>({ a: EMPTY_PERSON, b: EMPTY_PERSON, relation: null });
+  const [draft, setDraft] = useState<DraftInput>({ a: EMPTY_PERSON, b: EMPTY_PERSON, relation: "friend" });
   const [touched, setTouched] = useState<Touched>({ a: {}, b: {} });
   const [submitted, setSubmitted] = useState(false);
   const [storageError, setStorageError] = useState(false);
@@ -120,7 +120,6 @@ export function AnalyzeForm() {
         draft={draft}
         labels={labels}
         errors={errors}
-        warnings={result.warnings}
         onChange={update}
         onBlur={blur}
       />

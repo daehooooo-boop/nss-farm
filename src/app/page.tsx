@@ -40,7 +40,7 @@ const SAMPLE: ResultPreviewData = {
 export default function HomePage() {
   return (
     <>
-      <Header />
+      <Header showCta={false} />
       <main id="main" className="flex-1">
         <Hero />
         <HowItWorks />

@@ -4,7 +4,7 @@ export const HOW_IT_WORKS = [
   {
     step: "01",
     title: "두 이름을 적어요",
-    body: "두 사람의 이름과 관계를 고르면 준비 끝. 한자와 이름의 뜻은 원할 때만 더해요.",
+    body: "두 사람의 이름과 관계를 고르면 준비 끝. 이름의 뜻은 원할 때만 더해요.",
   },
   {
     step: "02",
@@ -41,6 +41,6 @@ export const ANALYSIS_PILLARS = [
     title: "의미의 조화",
     weight: 30,
     body: "직접 적어 주신 이름의 뜻이 서로 닮았는지, 채워 주는지 읽어요.",
-    items: ["공유하는 뜻", "보완하는 뜻", "같은 한자"],
+    items: ["공유하는 뜻", "보완하는 뜻"],
   },
 ] as const;
