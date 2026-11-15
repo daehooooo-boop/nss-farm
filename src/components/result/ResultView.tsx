@@ -51,7 +51,7 @@ export function ResultView() {
           </div>
           <h1 className="mt-10 font-serif-kr text-[36px] leading-[1.2] font-bold md:text-[64px]">
             <span className="text-person-a-night">{a.name}</span>
-            <span className="mx-3 font-display font-normal text-paper/40 italic md:mx-5">×</span>
+            <span className="mx-3 font-display font-normal text-paper/60 md:mx-5">×</span>
             <span className="text-person-b-night">{b.name}</span>
           </h1>
           <p className="mt-5 max-w-[22em] font-serif-kr text-[20px] leading-[1.5] text-paper/90 md:text-[28px]">
@@ -74,13 +74,13 @@ export function ResultView() {
                   <div key={s.label}>
                     <dt className="text-[12px] text-paper/60">{s.label}</dt>
                     <dd className="mt-1 font-display text-[30px] leading-none tabular-nums">
-                      {s.score === null ? <span className="font-sans text-[14px] text-paper/50">자료 부족</span> : Math.round(s.score)}
+                      {s.score === null ? <span className="font-sans text-[14px] text-paper/60">자료 부족</span> : Math.round(s.score)}
                     </dd>
-                    <dd className="mt-1 text-[11px] text-paper/50">{s.w ? `반영 ${Math.round(s.w * 100)}%` : "제외"}</dd>
+                    <dd className="mt-1 text-[11px] text-paper/60">{s.w ? `반영 ${Math.round(s.w * 100)}%` : "제외"}</dd>
                   </div>
                 ))}
               </dl>
-              <p className="mt-5 text-[12px] leading-[1.6] text-paper/50">
+              <p className="mt-5 text-[12px] leading-[1.6] text-paper/60">
                 {weights.meaning === null
                   ? "이름의 뜻 자료가 없어 의미 항목은 빼고 발음과 구조만으로 계산했어요. "
                   : ""}

@@ -38,7 +38,7 @@ export function ResultPreview({ data }: { data: ResultPreviewData }) {
 
             <p className="mt-10 font-serif-kr text-[30px] leading-tight font-bold md:text-[40px]">
               <span className="text-person-a-night">{data.nameA}</span>
-              <span className="mx-3 font-display text-paper/50 italic">×</span>
+              <span className="mx-3 font-display text-paper/60">×</span>
               <span className="text-person-b-night">{data.nameB}</span>
             </p>
 
@@ -55,7 +55,7 @@ export function ResultPreview({ data }: { data: ResultPreviewData }) {
               </div>
             </div>
             <div className="mt-6 h-1 rounded-full bg-paper/10">
-              <div className="synergy-gradient h-1 rounded-full" style={{ width: `${data.total}%` }} />
+              <div className="h-1 rounded-full bg-paper" style={{ width: `${data.total}%` }} />
             </div>
 
             <dl className="mt-8 grid grid-cols-3 gap-3 border-t border-paper/15 pt-6">
@@ -63,7 +63,7 @@ export function ResultPreview({ data }: { data: ResultPreviewData }) {
                 <div key={s.label}>
                   <dt className="text-[12px] text-paper/60">{s.label}</dt>
                   <dd className="mt-1 font-display text-[28px] leading-none tabular-nums">
-                    {s.score ?? <span className="text-base text-paper/50">자료 부족</span>}
+                    {s.score ?? <span className="text-base text-paper/60">자료 부족</span>}
                   </dd>
                 </div>
               ))}

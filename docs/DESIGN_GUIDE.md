@@ -1,7 +1,7 @@
 # NAME SYNERGY — 브랜드 & 디자인 가이드
 
 - 버전: PHASE 1 MVP
-- 최종 수정: 2026-11-08
+- 최종 수정: 2026-11-15 (흑백 리디자인)
 - 적용 위치: 모든 토큰은 `src/app/globals.css`의 `@theme`에 정의하고, 컴포넌트는 토큰 이름으로만 색·폰트를 사용한다.
 
 ---
@@ -36,44 +36,45 @@ Editorial Design · Modern Minimalism · Digital Magazine · Human Connection ·
 
 ## 2. 핵심 시각 아이디어: "두 개의 선, 하나의 교차"
 
-- Person A와 Person B에 각각 고유 색을 준다: **A = Indigo, B = Clay**.
-- 두 색은 화면에서 거의 섞이지 않는다. 섞이는 순간은 **조화 지수**와 **공유 이미지** 단 두 곳(A→B 그라디언트)뿐이다. 그래서 "만남"이 특별해 보인다.
-- 기본 그래픽 모티프: 두 개의 얇은 원(또는 선)이 겹치는 형태. 로고 심볼, 섹션 구분, 로딩, 점수 시각화에 일관되게 쓴다.
+- 사이트 전체는 **블랙 & 화이트 모노크롬**이다. 색 대신 채움과 선, 밝기 차이로 두 사람을 구분한다.
+- **A = 흰색 채움(solid)**, **B = 회색 외곽선(outline)**. 배지·이름·그래픽에서 이 규칙을 지킨다.
+- A와 B가 섞이는 순간은 **조화 지수 링**과 **공유 이미지** 두 곳(흰색→회색 그라디언트)뿐이다.
+- 기본 그래픽 모티프: 두 개의 얇은 원이 겹치는 형태. 로고 심볼, 로딩, 점수 시각화에 일관되게 쓴다.
 
 ---
 
 ## 3. 색상
 
-### 3.1 토큰
+### 3.1 토큰 (2026-11-15 흑백 리디자인)
 
 | 토큰 | HEX | 용도 | 대비 (paper 위) |
 | --- | --- | --- | --- |
-| `paper` | `#F7F4EF` | 기본 배경 (따뜻한 오프화이트) | — |
-| `surface` | `#FFFFFF` | 카드, 입력 필드 배경 | — |
-| `ink` | `#17161C` | 본문·제목 기본 텍스트 | 16.4:1 |
-| `ink-soft` | `#55525C` | 보조 텍스트, 캡션 | 7.0:1 |
-| `ink-faint` | `#6E6A75` | 플레이스홀더, 메타 정보 (최소 크기 13px) | 4.8:1 |
-| `line` | `#E4DFD7` | 구분선, 카드 테두리 | 장식용 |
-| `line-strong` | `#CFC8BD` | 입력 필드 테두리 | 장식용 |
-| `person-a` | `#3D47B8` | Person A 강조 (Indigo) | 6.9:1 |
-| `person-a-tint` | `#ECEDFA` | Person A 배경 틴트 | — |
-| `person-b` | `#A44F24` | Person B 강조 (Clay, 텍스트용) | 5.1:1 |
-| `person-b-bright` | `#D9773F` | Person B 그래픽 전용 (텍스트 금지) | 2.9:1 |
-| `person-b-tint` | `#FBEEE6` | Person B 배경 틴트 | — |
-| `night` | `#17161C` | 반전 섹션 배경 (결과 커버, 공유 카드) | — |
-| `success` | `#2F7A57` | 복사 완료 등 긍정 피드백 | 4.7:1 |
-| `danger` | `#B3261E` | 입력 오류 문구 (작게, 절제해서) | 6.0:1 |
+| `paper` | `#0A0A0A` | 기본 배경 (거의 검정) | — |
+| `surface` | `#141414` | 카드, 입력 필드 배경 | — |
+| `ink` | `#F5F5F5` | 본문·제목 기본 텍스트 | 18.1:1 |
+| `ink-soft` | `#B3B3B3` | 보조 텍스트, 캡션 | 9.6:1 |
+| `ink-faint` | `#8F8F8F` | 플레이스홀더, 메타 정보 (최소 13px) | 6.1:1 |
+| `line` | `#262626` | 구분선, 카드 테두리 | 장식용 |
+| `line-strong` | `#3D3D3D` | 입력 필드·칩 테두리 | 장식용 |
+| `person-a` | `#FFFFFF` | Person A (흰색 채움) | 19.8:1 |
+| `person-a-tint` | `#1A1A1A` | Person A 배경 틴트 | — |
+| `person-b` | `#A6A6A6` | Person B (회색, 텍스트 가능) | 8.0:1 |
+| `person-b-bright` | `#7A7A7A` | Person B 그래픽 전용 | — |
+| `person-b-tint` | `#121212` | Person B 배경 틴트 | — |
+| `night` | `#F5F5F5` | 반전 블록 배경 (결과 커버, 푸터): 흰 바탕에 검은 글자 | — |
+| `success` | `#E5E5E5` | 복사 완료 등 긍정 피드백 | — |
+| `danger` | `#FF8080` | 입력 오류 문구 (유일한 유채색, 오류에만) | 7.4:1 |
 
-- 시그니처 그라디언트 `synergy`: `linear-gradient(120deg, #3D47B8 0%, #D9773F 100%)` — 조화 지수 시각화와 공유 카드에서만 사용.
-- `night` 배경 위 텍스트는 `paper`를 쓴다(16.4:1). night 위 Person 색은 `#A9A4FF`(A), `#F2A878`(B)를 그래픽·큰 숫자에만 사용.
+- 시그니처 그라디언트 `synergy`: `linear-gradient(120deg, #FFFFFF, #6B6B6B)`. 조화 지수와 공유 카드에서만 쓴다.
+- `night` 블록 위 텍스트는 `text-paper`를 쓰고, 불투명도는 **60% 이상**(약 5:1)만 허용한다. 40·50%는 AA 미달이라 금지.
 
 ### 3.2 사용 비율
 
-paper 70% · ink 20% · Person 색 8% · 그 외 2%. 강조 색이 많아 보이면 줄인다.
+검정 75% · 흰색 텍스트 20% · 회색 5%. 유채색은 오류 문구 외에 쓰지 않는다.
 
 ### 3.3 다크 모드
 
-PHASE 1은 라이트 테마 단일. 결과 커버와 공유 카드만 `night` 반전 블록으로 대비를 만든다.
+사이트 자체가 다크 단일 테마다(`color-scheme: dark`, `theme-color #0A0A0A`). 결과 커버와 푸터만 흰색 `night` 반전 블록으로 대비를 만든다.
 
 ---
 
@@ -83,34 +84,39 @@ PHASE 1은 라이트 테마 단일. 결과 커버와 공유 카드만 `night` �
 
 | 역할 | 서체 | 로드 방식 | 비고 |
 | --- | --- | --- | --- |
-| 영문 디스플레이·큰 숫자 | **Instrument Serif** | `next/font/google` | 매거진 마스트헤드 느낌, 이탤릭 허용 |
-| 워드마크 `이름 궁합`·한글 헤드라인 | **Noto Serif KR** (500, 700) | `next/font/google` | 에디토리얼 톤의 한글 제목 |
-| 본문·UI | **Pretendard Variable** | `pretendard` npm 패키지의 dynamic-subset CSS (한글을 unicode-range 조각으로 필요한 만큼만 로드) | 가독성, 숫자는 `tabular-nums` |
+| 영문 디스플레이·큰 숫자 | **Space Grotesk** (400/500/700) | `next/font/google` | 기하학적 그로테스크, 이탤릭 쓰지 않음 |
+| 한글 제목·워드마크·본문·UI | **Pretendard Variable** | `pretendard` dynamic-subset CSS | 제목은 800, 자간 -0.03em |
+| eyebrow·메타 라벨 | **JetBrains Mono** (400/500) | `next/font/google` | 자간 0.12em |
 
-CSS 변수: `--font-display`, `--font-serif-kr`, `--font-sans`.
+CSS 변수: `--font-display`(Space Grotesk), `--font-serif-kr`(이름은 유지, 값은 Pretendard), `--font-sans`, `--font-mono`.
 
 ### 4.2 스케일 (모바일 → 데스크톱)
 
 | 토큰 | 모바일 | 데스크톱 | 행간 | 서체 | 용도 |
 | --- | --- | --- | --- | --- | --- |
-| `display` | 44px | 88px | 1.0 | Instrument Serif | 워드마크, 조화 지수 숫자 |
-| `h1` | 30px | 52px | 1.25 | Noto Serif KR 700 | 히어로 카피, 결과 헤드라인 |
-| `h2` | 24px | 36px | 1.3 | Noto Serif KR 500 | 섹션 제목 |
+| `display` | 44px | 88px | 1.0 | Space Grotesk | 조화 지수 숫자 |
+| `h1` (홈) | 20px | 52px | 1.2–1.35 | Pretendard 800 | 히어로 카피 (모바일은 폼을 한 화면에 넣기 위해 작게) |
+| `h1` (결과) | 30px | 52px | 1.25 | Pretendard 800 | 결과 헤드라인 |
+| `h2` | 24px | 36px | 1.3 | Pretendard 700 | 섹션 제목 |
 | `h3` | 18px | 22px | 1.4 | Pretendard 600 | 카드 제목 |
 | `body-lg` | 17px | 19px | 1.7 | Pretendard 400 | 리포트 본문 |
 | `body` | 15px | 16px | 1.65 | Pretendard 400 | 일반 본문, 입력 |
 | `caption` | 13px | 13px | 1.5 | Pretendard 500 | 캡션, 보조 정보 |
-| `eyebrow` | 11px | 12px | 1.4 | Pretendard 600, 자간 0.16em, 대문자 | 섹션 라벨 (예: `01 — SOUND`) |
+| `eyebrow` | 11px | 12px | 1.4 | JetBrains Mono 500, 자간 0.12em | 섹션 라벨 (예: `01 — SOUND`) |
 
-- 한글 본문은 `word-break: keep-all`.
-- 한 줄 길이: 본문 최대 34em(한글 약 34자).
+- 한글 본문은 `word-break: keep-all`, 기본 자간 -0.01em.
+- 한 줄 길이: 본문 최대 34em.
 - 숫자 데이터는 `tabular-nums`로 정렬.
 
 ### 4.3 에디토리얼 장치
 
 - **섹션 번호 + 영문 eyebrow**: `01 — SOUND`, `02 — STRUCTURE`, `03 — MEANING`, `04 — TYPE`, `05 — STORY`.
-- **풀 쿼트**: 리포트의 핵심 문장 하나를 Noto Serif KR로 크게.
+- **풀 쿼트**: 리포트의 핵심 문장 하나를 Pretendard 700으로 크게.
 - **가는 구분선**: 1px `line`, 섹션 사이 간격 큼.
+
+### 4.4 첫 화면 규칙
+
+이름 2개 입력, 관계 선택, `분석하기` CTA가 스크롤 없이 한 화면에 보여야 한다 (375×548 Safari 툴바 포함 화면 기준 CTA 하단 427px). 한자·뜻 입력은 토글 하나 뒤에 접어 둔다.
 
 ---
 
@@ -151,13 +157,13 @@ CSS 변수: `--font-display`, `--font-serif-kr`, `--font-sans`.
 
 ```
 ┌──────────────────────────┐
-│ 이름 궁합            (상단)│  Noto Serif KR 700, paper
+│ 이름 궁합            (상단)│  Pretendard 700, #F5F5F5
 │                          │
-│   김민준                  │  Noto Serif KR, #A9A4FF
+│   김민준                  │  Pretendard 800, #FFFFFF (A)
 │      ×                   │
-│   이서연                  │  Noto Serif KR, #F2A878
+│   이서연                  │  Pretendard 800, #A6A6A6 (B)
 │                          │
-│   87                     │  Instrument Serif 대형 숫자 + synergy 링
+│   87                     │  Space Grotesk 대형 숫자 + 흰→회색 링
 │   이름 조화 지수           │
 │                          │
 │   HARMONY TYPE           │  eyebrow
@@ -169,7 +175,7 @@ CSS 변수: `--font-display`, `--font-serif-kr`, `--font-sans`.
 └──────────────────────────┘
 ```
 
-배경 `night`, 상하 여백 160px, 좌우 96px. 이름이 5자여도 한 줄에 들어가야 한다.
+배경 `#0A0A0A`, 상하 여백 160px, 좌우 96px. 이름이 5자여도 한 줄에 들어가야 한다.
 
 ## 9. 보이스 & 톤 (UI 카피)
 

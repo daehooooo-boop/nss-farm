@@ -5,12 +5,12 @@ import { AnalyzeForm } from "@/components/analyze/AnalyzeForm";
 /** 첫 화면: 짧은 카피 + 이름 입력 폼을 바로 노출한다. 자세한 설명은 아래 섹션에서. */
 export function Hero() {
   return (
-    <section id="start" aria-labelledby="hero-title" className="scroll-mt-16">
-      <Container className="pt-5 pb-16 md:pt-12 lg:pt-16 lg:pb-24">
+    <section id="start" aria-labelledby="hero-title" className="scroll-mt-12">
+      <Container className="pt-4 pb-16 md:pt-12 lg:pt-16 lg:pb-24">
         <div className="animate-rise">
           <h1
             id="hero-title"
-            className="font-serif-kr text-[22px] leading-[1.35] font-bold tracking-[-0.01em] md:text-[36px] lg:text-[44px]"
+            className="font-serif-kr text-[20px] leading-[1.35] font-extrabold md:text-[40px] lg:text-[52px] lg:leading-[1.2]"
           >
             두 사람의 이름에는
             <br />
@@ -21,7 +21,7 @@ export function Hero() {
           </p>
         </div>
 
-        <div className="mt-5 animate-rise [animation-delay:80ms] md:mt-10">
+        <div className="mt-4 animate-rise [animation-delay:80ms] md:mt-10">
           <AnalyzeForm />
         </div>
 

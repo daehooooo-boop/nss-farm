@@ -35,7 +35,6 @@ export function HeroVisual({ className = "" }: { className?: string }) {
         textAnchor="middle"
         className="font-display"
         fontSize="30"
-        fontStyle="italic"
         fill="var(--color-paper)"
       >
         ×

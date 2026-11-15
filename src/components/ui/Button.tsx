@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { ComponentPropsWithoutRef, ReactNode } from "react";
 
 export type ButtonVariant = "primary" | "secondary" | "ghost" | "inverse";
-export type ButtonSize = "md" | "lg";
+export type ButtonSize = "md" | "lg" | "cta";
 
 const BASE =
   "inline-flex select-none items-center justify-center gap-2 rounded-full font-semibold transition-[background-color,color,transform,opacity,border-color] duration-200 ease-[var(--ease-out-soft)] active:scale-[0.98] disabled:pointer-events-none disabled:opacity-40";
@@ -17,6 +17,7 @@ const VARIANT: Record<ButtonVariant, string> = {
 const SIZE: Record<ButtonSize, string> = {
   md: "h-11 px-5 text-[15px]",
   lg: "h-14 px-7 text-base md:h-[52px]",
+  cta: "h-12 px-7 text-base md:h-14",
 };
 
 export function buttonClass(

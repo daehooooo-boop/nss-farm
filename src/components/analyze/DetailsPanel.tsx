@@ -29,7 +29,7 @@ export function DetailsPanel({ draft, labels, errors, warnings, onChange, onBlur
         aria-expanded={expanded}
         aria-controls={panelId}
         onClick={() => setOpen((v) => !v)}
-        className="inline-flex min-h-9 items-center gap-1.5 text-[13px] font-semibold text-ink-soft hover:text-ink"
+        className="inline-flex min-h-8 items-center gap-1.5 text-[13px] font-semibold text-ink-soft hover:text-ink"
       >
         {expanded ? <Minus size={15} strokeWidth={2} aria-hidden /> : <Plus size={15} strokeWidth={2} aria-hidden />}
         한자 · 이름의 뜻 더하기 <span className="font-normal text-ink-faint">(선택 · 의미까지 분석)</span>

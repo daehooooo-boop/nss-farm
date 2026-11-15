@@ -88,8 +88,8 @@ export function AnalyzeForm() {
   const errors = { a: visibleErrors("a"), b: visibleErrors("b") };
 
   return (
-    <form ref={formRef} noValidate onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
-      <div className="grid gap-3 md:grid-cols-[1fr_auto_1fr] md:items-start md:gap-4">
+    <form ref={formRef} noValidate onSubmit={handleSubmit} className="space-y-3 md:space-y-6">
+      <div className="grid grid-cols-2 items-start gap-2.5 md:grid-cols-[1fr_auto_1fr] md:gap-4">
         <NameField
           personKey="a"
           label={labels.a}
@@ -101,7 +101,7 @@ export function AnalyzeForm() {
         />
         <span
           aria-hidden="true"
-          className="hidden size-10 place-items-center self-end rounded-full font-display text-2xl text-ink-faint italic md:mb-2 md:grid"
+          className="hidden size-10 place-items-center self-end rounded-full font-display text-2xl text-ink-faint md:mb-2 md:grid"
         >
           ×
         </span>
@@ -127,16 +127,17 @@ export function AnalyzeForm() {
 
       <RelationPicker value={draft.relation} error={relationError} onChange={selectRelation} />
 
-      <div className="pt-1 md:flex md:items-center md:justify-between md:gap-6 md:pt-2">
+      <div className="pt-0.5 md:flex md:items-center md:justify-between md:gap-6 md:pt-2">
         <Button
           type="submit"
           aria-disabled={!result.ok}
+          size="cta"
           className={`w-full md:order-2 md:w-auto md:min-w-[220px] ${result.ok ? "" : "opacity-40"}`}
           icon={<ArrowRight size={20} strokeWidth={1.75} aria-hidden />}
         >
           분석하기
         </Button>
-        <p className="mt-2.5 flex items-center justify-center gap-1.5 text-[12px] text-ink-faint md:order-1 md:mt-0 md:text-[13px]">
+        <p className="mt-2 flex items-center justify-center gap-1.5 text-[12px] text-ink-faint md:order-1 md:mt-0 md:text-[13px]">
           <Lock size={13} strokeWidth={1.75} aria-hidden />
           이름은 저장되지 않고 이 브라우저 안에서만 분석돼요
         </p>

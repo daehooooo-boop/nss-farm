@@ -21,17 +21,17 @@ export default async function OpengraphImage() {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          background: "#17161c",
-          color: "#f7f4ef",
+          background: "#0a0a0a",
+          color: "#f5f5f5",
           fontFamily: "Pretendard",
         }}
       >
         <div style={{ display: "flex" }}>
-          <div style={{ width: 130, height: 130, borderRadius: 999, border: "6px solid #a9a4ff" }} />
-          <div style={{ width: 130, height: 130, borderRadius: 999, border: "6px solid #f2a878", marginLeft: -46 }} />
+          <div style={{ width: 130, height: 130, borderRadius: 999, border: "6px solid #ffffff" }} />
+          <div style={{ width: 130, height: 130, borderRadius: 999, border: "6px solid #8c8c8c", marginLeft: -46 }} />
         </div>
         <div style={{ marginTop: 44, fontSize: 96, letterSpacing: -2 }}>이름 궁합</div>
-        <div style={{ marginTop: 14, fontSize: 34, color: "rgba(247,244,239,0.65)" }}>
+        <div style={{ marginTop: 14, fontSize: 34, color: "rgba(245,245,245,0.6)" }}>
           두 사람의 이름이 만드는 조화 · Two Names, One Connection.
         </div>
       </div>

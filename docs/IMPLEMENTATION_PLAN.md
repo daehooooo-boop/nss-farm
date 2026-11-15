@@ -110,3 +110,7 @@
 - axe(WCAG 2 A/AA) 위반 0건: `/`, `/analyze`, `/result`
 - 흐름: 정상 입력, 이름 누락, 반려동물 1글자, 5글자 이름, 한자만 입력, 동일 이름 반복, 결과 없음(새 탭) 확인
 - 공유: PNG 다운로드, 문구 복사 확인. Web Share는 지원 브라우저(모바일)에서 실기기 확인 필요
+
+## 디자인 변경 기록
+
+- 2026-11-15 흑백 리디자인: 다크 모노크롬 토큰, Space Grotesk·Pretendard·JetBrains Mono로 서체 교체(STEP 2의 Instrument Serif·Noto Serif KR은 더 이상 쓰지 않음). 홈 입력 폼 압축으로 375×548에서도 이름·관계·분석하기가 한 화면에 보임. axe(WCAG 2 AA) 홈·결과 위반 0건.

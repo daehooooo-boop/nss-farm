@@ -1,18 +1,17 @@
-import { Instrument_Serif, Noto_Serif_KR } from "next/font/google";
+import { JetBrains_Mono, Space_Grotesk } from "next/font/google";
 
-/** 워드마크, 영문 디스플레이, 큰 숫자 */
-export const instrumentSerif = Instrument_Serif({
-  weight: "400",
-  style: ["normal", "italic"],
+/** 영문 디스플레이, 큰 숫자 — 기하학적 그로테스크 */
+export const spaceGrotesk = Space_Grotesk({
+  weight: ["400", "500", "700"],
   subsets: ["latin"],
-  variable: "--font-instrument",
+  variable: "--font-grotesk",
   display: "swap",
 });
 
-/** 한글 헤드라인. Google Fonts가 한글을 unicode-range 조각으로 나눠 제공하므로 preload는 끈다. */
-export const notoSerifKr = Noto_Serif_KR({
-  weight: ["500", "700"],
-  variable: "--font-noto-serif-kr",
+/** 라벨(eyebrow)·메타 정보 — 모노스페이스 */
+export const jetbrainsMono = JetBrains_Mono({
+  weight: ["400", "500"],
+  subsets: ["latin"],
+  variable: "--font-jetbrains",
   display: "swap",
-  preload: false,
 });

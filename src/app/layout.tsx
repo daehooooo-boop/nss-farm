@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "pretendard/dist/web/variable/pretendardvariable-dynamic-subset.css";
 import "./globals.css";
-import { instrumentSerif, notoSerifKr } from "./fonts";
+import { jetbrainsMono, spaceGrotesk } from "./fonts";
 import { SITE } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -28,14 +28,15 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#f7f4ef",
+  themeColor: "#0a0a0a",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="ko"
-      className={`${instrumentSerif.variable} ${notoSerifKr.variable} h-full antialiased`}
+      style={{ colorScheme: "dark" }}
+      className={`${spaceGrotesk.variable} ${jetbrainsMono.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col">
         <a

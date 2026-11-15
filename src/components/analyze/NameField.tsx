@@ -15,8 +15,8 @@ type NameFieldProps = {
 };
 
 const TONE = {
-  a: { badge: "bg-person-a", text: "text-person-a", ring: "focus:border-person-a focus:ring-person-a" },
-  b: { badge: "bg-person-b", text: "text-person-b", ring: "focus:border-person-b focus:ring-person-b" },
+  a: { badge: "bg-person-a text-paper", text: "text-person-a", ring: "focus:border-person-a focus:ring-person-a" },
+  b: { badge: "border border-person-b text-person-b", text: "text-person-b", ring: "focus:border-person-b focus:ring-person-b" },
 } as const;
 
 /** 한 줄짜리 이름 입력: A/B 배지 + 라벨 + 큰 입력창 */
@@ -28,7 +28,7 @@ export function NameField({ personKey, label, value, placeholder, error, onChang
       <label htmlFor={id} className="flex items-center gap-2 text-[13px] font-semibold">
         <span
           aria-hidden="true"
-          className={`grid size-5 place-items-center rounded-full font-display text-[13px] text-paper ${tone.badge}`}
+          className={`grid size-5 place-items-center rounded-full font-display text-[12px] font-bold ${tone.badge}`}
         >
           {personKey.toUpperCase()}
         </span>
@@ -45,7 +45,7 @@ export function NameField({ personKey, label, value, placeholder, error, onChang
         aria-describedby={error ? `${id}-err` : undefined}
         onChange={(e) => onChange(e.target.value)}
         onBlur={onBlur}
-        className={`mt-1.5 block h-12 w-full rounded-[var(--radius-field)] border bg-surface px-4 text-[18px] font-semibold tracking-[0.02em] text-ink placeholder:font-normal placeholder:text-ink-faint/70 transition-[border-color,box-shadow] duration-200 outline-none focus:ring-2 md:h-14 md:text-[20px] ${
+        className={`mt-1 block h-12 w-full min-w-0 rounded-[var(--radius-field)] border bg-surface px-3.5 text-[17px] font-semibold tracking-[0.02em] text-ink placeholder:font-normal placeholder:text-ink-faint/70 transition-[border-color,box-shadow] duration-200 outline-none focus:ring-2 md:h-14 md:text-[20px] ${
           error ? "border-danger" : "border-line-strong"
         } ${tone.ring}`}
       />
