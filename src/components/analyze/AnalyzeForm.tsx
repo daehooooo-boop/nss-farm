@@ -88,8 +88,8 @@ export function AnalyzeForm() {
   const errors = { a: visibleErrors("a"), b: visibleErrors("b") };
 
   return (
-    <form ref={formRef} noValidate onSubmit={handleSubmit} className="space-y-3 md:space-y-6">
-      <div className="grid grid-cols-2 items-start gap-2.5 md:grid-cols-[1fr_auto_1fr] md:gap-4">
+    <form ref={formRef} noValidate onSubmit={handleSubmit} className="space-y-3 md:max-w-[640px] md:space-y-6">
+      <div className="grid gap-2 md:gap-3">
         <NameField
           personKey="a"
           label={labels.a}
@@ -99,12 +99,6 @@ export function AnalyzeForm() {
           onChange={(v) => update("a", "name", v)}
           onBlur={() => blur("a", "name")}
         />
-        <span
-          aria-hidden="true"
-          className="hidden size-10 place-items-center self-end rounded-full font-display text-2xl text-ink-faint md:mb-2 md:grid"
-        >
-          ×
-        </span>
         <NameField
           personKey="b"
           label={labels.b}
