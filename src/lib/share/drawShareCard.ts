@@ -3,6 +3,8 @@
  * 외부 서비스로 아무것도 보내지 않고, 브라우저 안에서만 이미지를 만든다.
  */
 
+import { MARK_BOX, MARK_PATH } from "@/lib/brand/mark";
+
 export type ShareCardData = {
   nameA: string;
   nameB: string;
@@ -98,15 +100,15 @@ export async function drawShareCard(data: ShareCardData): Promise<HTMLCanvasElem
   ctx.textBaseline = "alphabetic";
 
   // 상단: 심볼 + 워드마크 + 관계
-  ctx.lineWidth = 4;
-  ctx.strokeStyle = COLOR.a;
-  ctx.beginPath();
-  ctx.arc(left + 26, 150, 24, 0, Math.PI * 2);
-  ctx.stroke();
-  ctx.strokeStyle = COLOR.b;
-  ctx.beginPath();
-  ctx.arc(left + 60, 150, 24, 0, Math.PI * 2);
-  ctx.stroke();
+  // 심볼: 높이 56px로 맞춰 워드마크 왼쪽에 둔다
+  const markScale = 56 / MARK_BOX.height;
+  ctx.save();
+  ctx.translate(left, 150 - 28);
+  ctx.scale(markScale, markScale);
+  ctx.translate(-MARK_BOX.x, -MARK_BOX.y);
+  ctx.fillStyle = COLOR.paper;
+  ctx.fill(new Path2D(MARK_PATH));
+  ctx.restore();
   ctx.fillStyle = COLOR.paper;
   ctx.font = `700 46px ${serifKr}`;
   ctx.textAlign = "left";

@@ -1,6 +1,7 @@
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { ImageResponse } from "next/og";
+import { MARK_BOX, MARK_PATH, MARK_VIEWBOX } from "@/lib/brand/mark";
 
 export const alt = "이름 궁합 — Two Names, One Connection.";
 export const size = { width: 1200, height: 630 };
@@ -26,10 +27,9 @@ export default async function OpengraphImage() {
           fontFamily: "Pretendard",
         }}
       >
-        <div style={{ display: "flex" }}>
-          <div style={{ width: 130, height: 130, borderRadius: 999, border: "6px solid #0a0a0a" }} />
-          <div style={{ width: 130, height: 130, borderRadius: 999, border: "6px solid #8c8c8c", marginLeft: -46 }} />
-        </div>
+        <svg width={300} height={Math.round((300 * MARK_BOX.height) / MARK_BOX.width)} viewBox={MARK_VIEWBOX}>
+          <path d={MARK_PATH} fill="#171717" />
+        </svg>
         <div style={{ marginTop: 44, fontSize: 96, letterSpacing: -2 }}>이름 궁합</div>
         <div style={{ marginTop: 14, fontSize: 34, color: "rgba(10,10,10,0.6)" }}>
           두 사람의 이름이 만드는 조화 · Two Names, One Connection.
