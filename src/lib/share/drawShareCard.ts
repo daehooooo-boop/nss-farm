@@ -12,6 +12,8 @@ export type ShareCardData = {
   typeCode: string;
   typeTitle: string;
   message: string;
+  /** 카드 하단에 적는 사이트 주소 (예: nss-farm.vercel.app) */
+  siteHost: string;
 };
 
 export const CARD_WIDTH = 1080;
@@ -73,10 +75,10 @@ export async function drawShareCard(data: ShareCardData): Promise<HTMLCanvasElem
   const serifKr = sans; // 흑백 리디자인: 한글은 모두 Pretendard
 
   // 카드에 쓰는 글자가 폰트 조각에 포함되도록 미리 불러온다
-  const allText = `이름 궁합${data.nameA}${data.nameB}${data.grade}${data.message}${data.typeTitle}${data.relationLabel}`;
+  const allText = `이름 궁합 나도 보러 가기→${data.nameA}${data.nameB}${data.grade}${data.message}${data.typeTitle}${data.relationLabel}`;
   await Promise.allSettled([
     document.fonts.load(`400 64px ${display}`, `0123456789 ${data.typeCode} TYPE ×`),
-    document.fonts.load(`500 32px ${display}`, "Two Names, One Connection. ×"),
+    document.fonts.load(`500 32px ${display}`, `Two Names, One Connection. × ${data.siteHost}`),
     document.fonts.load(`700 64px ${serifKr}`, allText),
     document.fonts.load(`500 40px ${serifKr}`, allText),
     document.fonts.load(`600 34px ${sans}`, allText),
@@ -124,16 +126,16 @@ export async function drawShareCard(data: ShareCardData): Promise<HTMLCanvasElem
   );
   ctx.font = `800 ${nameSize}px ${serifKr}`;
   ctx.fillStyle = COLOR.a;
-  ctx.fillText(data.nameA, cx, 470);
+  ctx.fillText(data.nameA, cx, 400);
   ctx.font = `500 84px ${display}`;
   ctx.fillStyle = "rgba(10,10,10,0.45)";
-  ctx.fillText("×", cx, 590);
+  ctx.fillText("×", cx, 510);
   ctx.font = `800 ${nameSize}px ${serifKr}`;
   ctx.fillStyle = COLOR.b;
-  ctx.fillText(data.nameB, cx, 740);
+  ctx.fillText(data.nameB, cx, 650);
 
   // 지수 링
-  const ringY = 1060;
+  const ringY = 935;
   const r = 190;
   ctx.lineWidth = 10;
   ctx.strokeStyle = "rgba(10,10,10,0.12)";
@@ -162,7 +164,7 @@ export async function drawShareCard(data: ShareCardData): Promise<HTMLCanvasElem
   ctx.fillText(data.grade, cx, ringY + r + 110);
 
   // 관계 유형
-  const typeY = 1510;
+  const typeY = 1365;
   ctx.strokeStyle = "rgba(10,10,10,0.15)";
   ctx.lineWidth = 2;
   ctx.beginPath();
@@ -180,15 +182,25 @@ export async function drawShareCard(data: ShareCardData): Promise<HTMLCanvasElem
   ctx.font = `500 40px ${serifKr}`;
   ctx.fillStyle = COLOR.paper;
   const lines = wrapText(ctx, `“${data.message}”`, contentWidth).slice(0, 3);
-  lines.forEach((line, i) => ctx.fillText(line, cx, typeY + 170 + i * 60));
+  lines.forEach((line, i) => ctx.fillText(line, cx, typeY + 140 + i * 58));
 
-  // 하단
-  ctx.font = `500 34px ${display}`;
-  ctx.fillStyle = "rgba(10,10,10,0.6)";
-  ctx.fillText("Two Names, One Connection.", cx, CARD_HEIGHT - 110);
+  // 하단: 이 카드를 받은 사람이 바로 분석하러 갈 수 있는 경로
+  const pillW = 640;
+  const pillH = 96;
+  const pillY = CARD_HEIGHT - 240;
+  ctx.fillStyle = COLOR.paper;
+  ctx.beginPath();
+  ctx.roundRect(cx - pillW / 2, pillY, pillW, pillH, pillH / 2);
+  ctx.fill();
+  ctx.font = `700 34px ${sans}`;
+  ctx.fillStyle = COLOR.night;
+  ctx.fillText("나도 이름 궁합 보러 가기 →", cx, pillY + 60);
+  ctx.font = `500 30px ${display}`;
+  ctx.fillStyle = "rgba(10,10,10,0.75)";
+  ctx.fillText(data.siteHost, cx, CARD_HEIGHT - 100);
   ctx.font = `500 22px ${sans}`;
   ctx.fillStyle = "rgba(10,10,10,0.55)";
-  ctx.fillText("재미로 보는 엔터테인먼트 콘텐츠", cx, CARD_HEIGHT - 66);
+  ctx.fillText("Two Names, One Connection. · 재미로 보는 엔터테인먼트 콘텐츠", cx, CARD_HEIGHT - 60);
 
   return canvas;
 }

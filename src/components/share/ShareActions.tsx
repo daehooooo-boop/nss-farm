@@ -8,6 +8,7 @@ import { relationOption } from "@/data/relations";
 import { canvasToBlob, drawShareCard, type ShareCardData } from "@/lib/share/drawShareCard";
 import type { AnalysisResult } from "@/lib/analysis/types";
 import type { Report } from "@/lib/report/buildReport";
+import { SITE } from "@/lib/site";
 
 const FILE_NAME = "name-synergy-result.png";
 const noopSubscribe = () => () => {};
@@ -57,6 +58,7 @@ export function ShareActions({ result, report }: { result: AnalysisResult; repor
     typeCode: result.type.code,
     typeTitle: RELATION_TYPES[result.type.code].title,
     message: report.headline,
+    siteHost: new URL(SITE.url).host,
   };
 
   async function makeImage(): Promise<Blob> {
