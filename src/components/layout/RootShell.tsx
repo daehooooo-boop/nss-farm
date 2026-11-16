@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { jetbrainsMono, spaceGrotesk } from "@/app/fonts";
 import { getDict } from "@/i18n/dict";
+import { SiteAnalytics } from "@/components/layout/SiteAnalytics";
 import type { Locale } from "@/i18n/locale";
 
 /** 언어별 루트 레이아웃이 함께 쓰는 html/body 뼈대 */
@@ -19,6 +20,7 @@ export function RootShell({ locale, children }: { locale: Locale; children: Reac
           {getDict(locale).skipLink}
         </a>
         {children}
+        <SiteAnalytics />
       </body>
     </html>
   );
