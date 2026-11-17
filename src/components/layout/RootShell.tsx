@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { Analytics } from "@vercel/analytics/next";
 import { jetbrainsMono, spaceGrotesk } from "@/app/fonts";
 import { getDict } from "@/i18n/dict";
 import type { Locale } from "@/i18n/locale";
@@ -19,6 +20,7 @@ export function RootShell({ locale, children }: { locale: Locale; children: Reac
           {getDict(locale).skipLink}
         </a>
         {children}
+        <Analytics />
       </body>
     </html>
   );
