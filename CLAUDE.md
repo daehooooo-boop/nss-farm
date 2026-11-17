@@ -67,7 +67,7 @@ docs/                  # PRD, 디자인 가이드, 분석 규칙, 구현 계획
 
 ## 6. 개인정보
 
-- 이름을 서버·DB·URL 쿼리·외부 분석 도구에 보내지 않는다. 분석은 브라우저에서 수행하고 결과는 `sessionStorage`에만 둔다.
+- 이름을 서버·DB·URL 쿼리·외부 분석 도구에 보내지 않는다. 방문 분석은 Vercel Web Analytics만 쓰고(`SiteAnalytics`), 쿼리·해시를 지운 경로만 보낸다. 분석은 브라우저에서 수행하고 결과는 `sessionStorage`에만 둔다.
 - 생년월일·출생시간은 PHASE 1에서 받지 않는다.
 - 비밀 값은 `.env.local`에만 두고 프론트엔드 코드에 넣지 않는다 (`.env*`는 `.gitignore`에 포함됨).
 
